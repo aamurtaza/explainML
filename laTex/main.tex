@@ -117,6 +117,7 @@
 \usepackage{hyperref}
 \usepackage[export]{adjustbox}
 \usepackage{wrapfig}
+%\usepackage{lipsum}
 
 %% package algorithm plus algorithmic style
 %\usepackage{algorithm}
@@ -360,7 +361,7 @@ This section explains the methodologies which are carried from research to measu
 
 On a high-level, the steps work as follow. 1) Predictive models are trained to perform classification tasks; these models behave as black-box models in the process. 2) Explanation methods interpret black-box models to find the reasons behind the predictions. 3) Explanations robustness is measured using local Lipschitz estimation technique \citep{alvarez2018robustness}.
 
-Let $f_c: X \rightarrow y$ as a black-box classifier who classifies $x \in X; X = {\rm I\!R}^d$ to class $c_x; c_x \in y = \{c_1, ..., c_n\}$. Now, let $z \in X$ be an instance from input space which requires an explanation for a prediction $f_c(z) = c_z$. An explanation model $f_e(z)$ outputs an explanation feature vector $ e = {\rm I\!R}^d$ for which the estimation of robustness or stability is required. The main objective of this section is to define the notion of stability using local Lipschitz esitmation which requires a neighborhood $N_{\epsilon}(z)$ around an instance $z \in X$. Verbally, the notion of stability is the estimation of \textit{"how similar are the explanations for similar instances"} and vice versa indicates the notion of unstabiliy.
+Let $f_c: X \mapsto y$ as a black-box classifier who classifies $x \in X; X = {\rm I\!R}^d$ to class $y, y \in \{c_1, \dots, c_n\}$. Now, let $z \in X$ be an instance from input space which requires an explanation for a prediction $f_c(z) = c_z$. An explanation model $f_e(z)$ outputs an explanation feature vector $ e = {\rm I\!R}^d$ for which the estimation of robustness or stability is required. The main objective of this section is to define the notion of stability using local Lipschitz esitmation which requires a neighborhood $N_{\epsilon}(z)$ around an instance $z \in X$. Verbally, the notion of stability is the estimation of \textit{"how similar are the explanations for similar instances"} and vice versa indicates the notion of unstabiliy.
 
 An overview of predictive models and explanation methods is presented in Section 3.1 and Section 3.2, respectively. Section~\ref{sec:defining_similarity} defines similarity measure and Section~\ref{sec:defining_explanation_evaluation_framework} formalize the robustness measure and presents algorithms used in the implementation.
 
@@ -384,12 +385,14 @@ An overview of predictive models and explanation methods is presented in Section
 %%	\item \textit{Explain how it works, learn and predict}
 %%\end{itemize}
 
-%\subsection{Model-Dependent Explanation Methods}%\subsection{}
+\subsection{Model-Dependent Explanation Methods}%\subsection{}
 \subsection{Model-Agnostic Explanation Methods} %\subsection{}
 %\textit{Sub-section Scope.}
 %\begin{itemize}
 %	\item \textit{Explain about selected explanation methods}
 %\end{itemize}
+
+%The machine learning is a core element in the advancement of science and technology. However, in comparison to the technological progress in the field, the social aspects and trust concerns are neglected. Today, industrial digitalisation is impacting humans directly, and a wide range of machine learning models often deployed in products and services contribute to it. The main concern remains the same as  "if the users can trust the predictions and models". It is useful to highlight two aspects of trust here 1) \textit{"trust in the prediction"} that whether users can trust the prediction and decide based on it. 2) \textit{"trust in the model"} that whether users can trust and understand the overall behaviour of the model, not assuming it as some black-box.
 
 \subsubsection{Local Surrogate (LIME)} %\subsubsection{}
 %\textit{Sub-section Scope.}
@@ -399,6 +402,27 @@ An overview of predictive models and explanation methods is presented in Section
 %	\item \textit{Communicate the pros and cons of LIME.}
 %	\item \textit{- Add figure for an explanation}
 %\end{itemize}
+
+%An explanation can be presenting textual or visual artefacts that show the relationship between an instance's features and model's prediction. A critical argument is what if an explanation is not intelligible, therefore it is essential to make it faithful and understandable. Figure~\ref{fig:ribeiro2016_lime_figure1} is illustrating the case where a doctor can utilise the model explanation to make a decision. Here, an explanation is a small set of symptoms with some weights associated with them; green indicates symptom contribution and red shows that the symptom is against it. It can aid the decision-making where a domain expert can accept or reject the explanation based on his prior knowledge.
+
+%\begin{figure}[H]
+%	\includegraphics[width=1.0\linewidth]{ribeiro2016_lime_figure1}
+%	\vspace*{-10mm}
+%	\caption{LIME: \citep{ribeiro2016should}: }
+%	\label{fig:ribeiro2016_lime_figure1}
+%\end{figure}
+%
+%
+%\begin{wrapfigure}{r}{0.5\textwidth}
+%	\centering
+%	\vspace*{-2mm}
+%	\includegraphics[width=1.0\linewidth]{ribeiro2016_lime_figure2}
+%	\vspace*{-10mm}
+%	\caption{LIME: \citep{ribeiro2016should}: }
+%	\label{fig:ribeiro2016_lime_figure2}
+%\end{wrapfigure}
+%
+%In addition to trust concerns, it is worthwhile to measure the model's behaviour before deploying it in the wild. Often, the accuracy metric is used to evaluate the model on unseen data, but it may not indicates the product's goal every time. Inspecting multiple instances from large datasets and their explanations can aid to reduce the blind faith on accuracy measure. Local Interpretable Model-agnostic Explanations (LIME) provides an individual explanation as a solution to \textit{"trust in the prediction"} and giving multiple such explanations as an approximate answer to \textit{"trust in the model"} problem.
 
 \subsubsection{Shapley Values (SHAP)} %\subsubsection{}
 %\textit{Sub-section Scope.}
@@ -412,26 +436,34 @@ An overview of predictive models and explanation methods is presented in Section
 \subsection{Defining Similarity}\label{sec:defining_similarity} %\subsubsection{}
 To formulate the explanation evaluation framework the pre-requistie is to specify a similarity measure. One trivial way is using euclidean distance which is an ordinary straight line distance between two points in euclidean space (wikipedia). For instance, in euclidean n-space the distance between two points $x = \{x_1, x_2, ..., x_n\}$ and $y = \{y_1, y_2, ..., y_n\}$ is:
 
-\begin{align*}
+\begin{equation}\label{eq:euclidean_distance}
 d(x,y) = d(y,x) = \sqrt{\sum_{i=1}^{n}(x_i - y_i)^2}
-\end{align*}
+\end{equation}
 
 Using Euclidean distance choice, it is straightforward to define a small neighbourhood around any instance. However, estimating neighbourhood is challenging task itself, but euclidean distance allows us to find similar points trivially. The Definition~\ref{def:1} and Definition~\ref{def:2} formalize the notion of defining a ball of radius $r$ centered at instance $a$ as a neighbourhood policy. The subtle difference between the definitions is that closed balls contain all "exterior" points as compared to open balls.
-\begin{definition}\label{def:1}{Let $a \in {\rm I\!R}^n$: Then the \textbf{Open Ball centered at $a$ with Radius $r > 0$} denoted $B(a,r)$ is defined to be a set of all points $x \in {\rm I\!R}^2$ such that $||x-a|| < r$, that is, $\{x \in {\rm I\!R}^2 |\;||x - a|| < r\}.$}
+
+\begin{definition}\label{def:1}{Let $a \in {\rm I\!R}^n$: Then the \textbf{Open Ball centered at $a$ with Radius $r > 0$} denoted $B_{r}(a)$ is defined to be a set of all points $x \in {\rm I\!R}^n$ such that $||x-a|| < r$, that is, $\{x \in {\rm I\!R}^n |\;||x - a|| < r\}.$}
 \end{definition}
 Now, if n=2 then for each $a = (a_1,a_2) \in {\rm I\!R}^2$ and $r \in {\rm I\!R}^2$ where $r > 0$ we have an open ball centered at $a$ with radius $r$ is:
 \begin{align*}
-B(a,r) = \{x \in {\rm I\!R}^2\ : \sqrt{(x_1 - a_1)^2 + (x_2 - a_2)^2} < r\}
+B_{r}(a) = \{x \in {\rm I\!R}^2\ : \sqrt{(x_1 - a_1)^2 + (x_2 - a_2)^2} < r\}
 \end{align*}
+
 %% Definition of closed ball
-\begin{definition}\label{def:2}{Let $a \in {\rm I\!R}^n$: Then the \textbf{Closed Ball centered at $a$ with Radius $r > 0$} denoted $B(a,r)$ is defined to be a set of all points $x \in {\rm I\!R}^2$ such that $||x-a|| \leq r$, that is, $\{x \in {\rm I\!R}^2 |\;||x - a|| \leq r\}.$}
+\begin{definition}\label{def:2}{Let $a \in {\rm I\!R}^n$: Then the \textbf{Closed Ball centered at $a$ with Radius $r > 0$} denoted $B_{r}(a)$ is defined to be a set of all points $x \in {\rm I\!R}^n$ such that $||x-a|| \leq r$, that is, $\{x \in {\rm I\!R}^n |\;||x - a|| \leq r\}.$}
 \end{definition}
 And, if n=2 then for each $a = (a_1,a_2) \in {\rm I\!R}^2$ and $r \in {\rm I\!R}^2$ where $r > 0$ we have the closed ball centered at $a$ with radius $r$ is:
 \begin{align*}
-B(a,r) = \{x \in {\rm I\!R}^2\ : \sqrt{(x_1 - a_1)^2 + (x_2 - a_2)^2} \leq r\}
+B_{r}(a) = \{x \in {\rm I\!R}^2\ : \sqrt{(x_1 - a_1)^2 + (x_2 - a_2)^2} \leq r\}
 \end{align*}
 
-Now, with having above definitions we can proceed to next section.
+Now, using above definitions and \eqref{eq:euclidean_distance} an neighbouhood term can be defined as below \eqref{eq:neighbourhood}. It is useful especially relevant for a next section where neighbourhood policy is required to measure the \textit{robustness} for explanations. 
+
+\begin{equation}\label{eq:neighbourhood}
+N_{\epsilon}(x_i) = \{x_j \in X| \onespace d(x_i, x_j) \leq \epsilon\}
+\end{equation}  
+
+Here, $N_{\epsilon}(x_{i})$ is ball of radius $\epsilon$ centered at any point of interest $x_i$. It is noticeable that we used a closed ball Definiton~\ref{def:2} because \citep{alvarez2018robustness} used the same form in the original work.
 
 \subsection{Defining Explanation Evaluation Framework}\label{sec:defining_explanation_evaluation_framework} %\subsection{}
 The section attempts to define a robustness measure which seeks a variability in the explanations generated by interpretable methods for similar inputs. Intuitively, the idea is if a variation in inputs is subtle enough that it does not change the model's predictions, then it should not change explanations either. \citet{alvarez2018robustness} proposes a notion of robustness measure which forms the basis of this work.
@@ -446,94 +478,57 @@ The critical argument was that the understanding of a complex model using a sing
 	\caption{LIME and SHAP explanations for binary classifiers \citep{alvarez2018robustness}: The heatmaps show models’ positive-class probabilities and bar charts represent explanations (attribution values where x in green and y in purple) for predictions. It is visible that both LIME and SHAP explanations are stable for linear SVM model (top) but significantly vary for a non-linear two-layer neural network (bottom).}
 	\label{fig:alvarez2018_robustness_figure1}
 \end{wrapfigure}
+
 Figure~\ref{fig:alvarez2018_robustness_figure1} presented in original work \citep{alvarez2018robustness} shows the explanations generated by LIME \cite{ribeiro2016should} and SHAP \cite{lundberg2017unified} for binary classifier predictions trained on a two-dimensional dataset. It explained that the explanations for a complex neural network model (bottom row) are often inconsistent and vary noticeably for neighbouring points. On the other side, explanations for linear SVM's predictions (top row) are relatively stable. This instability motivated the investigation of such a phenomenon and a need for an objective tool to quantify stability.
 
-In light of this, Lipschitz continuity as function stability has been suggested to measure the relative change in output concerning the inputs. It measures the substantial relative deviations (global) throughout the input space. Since in the context of interpretable methods, explanations do not require uniformity for very distant inputs. Therefore, a local notion of stability (Definition~\ref{def:3}) has been proposed in the form of local Lipschitz continuity (Hein and Andriushchenko, 2017; Weng et al., 2018), which measure the relative deviations in a small neighbourhood input space. \newline
+In light of this, Lipschitz continuity as function stability has been suggested to measure the relative change in output concerning the inputs. It measures the substantial relative deviations (global) throughout the input space. Since in the context of interpretable methods, explanations do not require uniformity for very distant inputs. Therefore, a local notion of stability (Definition~\ref{def:3}) has been proposed in the form of local Lipschitz continuity (Hein and Andriushchenko, 2017; Weng et al., 2018), which measure the relative deviations in a small neighbourhood input space.
 \begin{definition}\label{def:3}{\textit{local notion of stability}:}
 	$f: X \subseteq {\rm I\!R}^n \rightarrow {\rm I\!R}^m$ is \textbf{\textit{locally Lipschitz}} \textit{if for every $x_0$ there exist $\delta > 0$ and $L \in {\rm I\!R}$ such that $||x - x_0|| < \delta$ implies $||f(x) - f(x_0)|| \leq L||x - x_0||$.}
 \end{definition}
 
-In the Definition~\ref{def:3}, $\delta$ and $L$ are dependent on an anchor point $x_i$. It allows quantifying the robustness of the explanations generated by a model $f$ in terms of constant $L$. Usually, this term is not known, and it requires an estimation. One straightforward way to solve it for every point of interest $x_i$ is to do as an optimization problem (Equation~\ref{eq:1}).
+In the Definition~\ref{def:3}, $\delta$ and $L$ are dependent on a point of interest $x_i$. It allows quantifying the robustness of the explanations generated by a model $f$ in terms of constant $L$. Usually, this term is not known, and it requires an estimation. One straightforward way to solve it for every point of interest $x_i$ is to do as an optimization problem \eqref{eq:lipschitz_estimation}.
+
 %Computing this quantity is a challenge itself because a function is not differentiable end-to-end. The computation needs a restricted evaluation budget, and luckily there are various approaches off the shelf to manage computation expenses, i.e., Bayesian Optimization  (Snoek et al. , 2012, and references therein).
-\begin{equation}\label{eq:1}
-\hat{L}(x_i) = \operatorname*{argmax}_{x_j \in B_{\epsilon}(x_i)}  \frac{||f(x_i) - f(x_j)||_{2}}{||x_i - x_j||_{2}}
+
+\begin{equation}\label{eq:lipschitz_estimation}
+L(x_i) = \operatorname*{max}_{x_j \in B_{\epsilon}(x_i)}  \frac{||f(x_i) - f(x_j)||_{2}}{||x_i - x_j||_{2}}
 \end{equation}
 
-Where $N_{\epsilon}(x_{i})$ is ball of radius $\epsilon$ centered at $x_i$. Using the formulation in \hyperref[sec:defining_similarity]{Section 3.3}, a neigrbourhood can be defined as below equation; This same form is used in the original work \citep{alvarez2018robustness} and it is noticeable that this relates to the closed ball Definiton~\ref{def:2}.
-\begin{align*}
-N_{\epsilon}(x_i) = \{x_j \in X|\;||x_i - x_j|| \leq \epsilon\}
-\end{align*}  
-
-%\begin{definition}{\textit{local notion of stability}:}
-%	$f: X \subseteq {\rm I\!R}^n \rightarrow {\rm I\!R}^m$ is \textbf{\textit{locally Lipschitz}} \textit{if for every $x_{0}$ there exist $\delta > 0$ and $L \in {\rm I\!R}$ such that $||x - x_{0}|| < \delta$ implies $||f(x) - f(x_{0})|| \leq L||x - x_{0}||$.}
-%\end{definition}
+Where $B_{\epsilon}(x_{i})$ is a ball of radius $\epsilon$ centered at $x_i$. It is a similar term to the one defined in \eqref{eq:neighbourhood}. 
 
 \subsubsection{Algorithmic Desgin}\label{sec:algorithmic_desgin} %% \subsubsection
-Moving towards algorithmic functionality, Algorithm~\ref{alg:Algo1} shows the implementation for local Lipschitz estimations used in various experimental settings. It takes 1) all the test-set points $ \in X$. 2) the explanations (attribution) vectors $f(X)$ generated by explanation model $f$  for all the test-set points $\in X$. 3) the value $\epsilon$ to define the radius.  It follows the intuitive strategy, iterates for each point of interest $x_i$ to find its neighbourhood (Algorithm~\ref{alg:Algo2}) and local Lipschitz value (Algorithm~\ref{alg:Algo3}) and put the value into an array of Lipschitz estimations. At the end of the iterations, it returns an array which contains the local Lipschitz values for all the test-set points.
+Moving towards algorithmic functionality, Algorithm~\ref{algo:lipscitz_estimation} shows the implementation for local Lipschitz estimations used in various experimental settings. It takes 1) all the test-set points $ \in X$. 2) the explanations (attribution) vectors $f_e(X)$ generated by explanation model $f_e$  for all the test-set points $\in X$. 3) the value $\epsilon$ to define the radius. It follows the intuitive strategy, iterates for each point of interest $x_i$ to find its neighbourhood (Line~\ref{algo:line:lipscitz_estimation_neighbourhood}). Then it estimates the maximal local Lipschitz value (Line~\ref{algo:line:lipscitz_estimation_calculation}) for the point of interest $x_i$ by solving the \eqref{eq:lipschitz_estimation} and outputs the computed value as $L(x_i)$ .
+
 %%%% Package algorithm plus algpseudocode style
 \begin{algorithm}[H]
-	\caption{$LipschitzEstimations(X,\onespace f(X),\onespace \epsilon)$}
-	\label{alg:Algo1}
-	\hspace*{\algorithmicindent} \textbf{Input}\textbf{:} $\{x_i,...,x_n\} \in X$\textbf{:} test set with all the points, $\onespace \{f(x_i),...,f(x_n)\} \in f(X)$\textbf{:} set of generated explanation vectors for all the points in a test set, $\onespace \epsilon$\textbf{:} radius threshold \\
-	\hspace*{\algorithmicindent} \textbf{Output}\textbf{:} $\hat{L}(X)$\textbf{:} array which holds local Lipschitz estimation value for all points $\in X$ 
+	\caption{$LipschitzEstimations(X,\onespace f_e(X),\onespace \epsilon)$}
+	\label{algo:lipscitz_estimation}
+	\hspace*{\algorithmicindent} \textbf{Input}\textbf{:} $\{x_i,...,x_n\} \in X$\textbf{:} test set with all the points, $\onespace \{f_e(x_i),...,f_e(x_n)\} \in f_e(X)$\textbf{:} set of generated explanation vectors for all the points in a test set, $\onespace \epsilon$\textbf{:} radius threshold \\
+	\hspace*{\algorithmicindent} \textbf{Output}\textbf{:} $L(x_i)$\textbf{:} local Lipschitz estimation value computed using \eqref{eq:lipschitz_estimation}
 	\begin{algorithmic}[1]
-		\State $d$ = $||x_i||$
-		\State $\epsilon$ = $\epsilon * \sqrt{d}$ 
+%		\State $d$ = $||x_i||$
+%		\State $\epsilon$ = $\epsilon * \sqrt{d}$ 
 		\For{\texttt{$x_{i}$ in X}}
-		\State $N_{\epsilon}(x_i) \gets Neighborhood(x_i,\; X,\; \epsilon)$
-		\State $\hat{L}(x_{i}) \gets LocalLipschitzEstimate(x_i,\; f(X),\; N_\epsilon(x_i))$
-		\State $\hat{L}(X) \gets$ $\hat{L}(x_i)$
+		\State \label{algo:line:lipscitz_estimation_neighbourhood} $N_\epsilon(x_i)\leftarrow \{x\in X\mid d(x,x_i)\le \epsilon\}$ \Comment {\eqref{eq:neighbourhood}}
+		\State \label{algo:line:lipscitz_estimation_calculation} $L(x_i) \gets \operatorname*{max}_{x_j \in N_\epsilon(x_i)} \frac{||f_e(x_i) - f_e(x_j)||_2}{||x_i - x_j||_2}$ \Comment {\eqref{eq:lipschitz_estimation}}
 		\EndFor
-		\MultiLineComment[0\dimexpr\algorithmicindent]{array of local lipschitz estimation for all points in $X$}
-		\State \textbf{return} $\hat{L}(X)$
+		\MultiLineComment[0\dimexpr\algorithmicindent]{local lipschitz estimation value for a point of interest $x_i$}
+		\State \textbf{return} $L(x_i)$
 		%		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
 
-Similarly, Algorithm~\ref{alg:Algo2} also takes a simple approach to find the neighbourhood points for any instance $x_i$. Algorithm~\ref{alg:Algo1} calls it for every instance and passes 1) anchor point or point of interest $x_i$, which requires a local Lipschitz estimation 2) all the test-set points $ \in X$. 3) the value $\epsilon$ to define the radius. Given the inputs, it calculates the Euclidean distances from anchor point $x_i$ to all points in $X$. If the distance is less than or equal to $\epsilon$ then the point $x_j \in X$ is placed into an array of neighbourhood points $N_{\epsilon}(x_i)$. Finally, it returns the $N_{\epsilon}(x_i)$, which contain all the neighbourhood points from the anchor point $x_i$.
-%%%% Package algorithm plus algpseudocode style
-\begin{algorithm}[H]
-	\caption{$Neighborhood(x_i,\onespace X,\onespace \epsilon)$}
-	\label{alg:Algo2}
-	\hspace*{\algorithmicindent} \textbf{Input}\textbf{:} $x_i$\textbf{:} point of interest which requires a local Lipschitz estimation, $\onespace \{x_i,...,x_n\} \in X$\textbf{:} test set with all the points, $\onespace \epsilon$\textbf{:} radius threshold  \\
-	\hspace*{\algorithmicindent} \textbf{Output}\textbf{:} $N_{\epsilon}(x_i)$\textbf{:} set of points in a small neighbourhood defined by $\epsilon$ around $x_i$  
-	\begin{algorithmic}[1]
-%	\Comment{$\epsilon$ = radius}
-		\For{\texttt{$x_j$ in X}}
-			\State $d(x_i, x_j)$ = $\sqrt{(x_j - x_i)^2}$
-			\If {$d(x_{i}, x_j) \leq \epsilon$}
-				\State $N_{\epsilon}(x_i) \gets x_j$
-			\EndIf
-		\EndFor
-		\MultiLineComment[0\dimexpr\algorithmicindent]{an array contains neighbourhood points}
-		\State \textbf{return} $N_{\epsilon}(x_i)$ 
-	\end{algorithmic}
-\end{algorithm}
-
-Algorithm~\ref{alg:Algo3} takes 1) anchor point or point of interest $x_i$, which requires a local Lipschitz estimation 2) the explanations (attribution) vectors $f(X)$ generated by explanation model $f$  for all the test-set points $\in X$. 3) the neighbourhood points from the anchor point $x_i$. It estimates the maximal local Lipschitz value for the anchor point $x_i$ by solving the (Equation 1) and outputs the computed value as $\hat{L}(x_i)$.
-%%%% Package algorithm plus algpseudocode style
-\begin{algorithm}[H]
-	\caption{$LocalLipschitzEstimate(x_i,\onespace f(X),\onespace N_\epsilon(x_i))$}
-	\label{alg:Algo3}
-	\hspace*{\algorithmicindent} \textbf{Input}\textbf{:} $x_i$\textbf{:} point of interest which requires a local Lipschitz estimation, $\onespace \{f(x_i),...,f(x_n)\} \in f(X)$\textbf{:} set of generated explanation vectors for all the points in a test set, $\onespace N_\epsilon(x_i)$\textbf{:} set of points in a small neighbourhood defined by $\epsilon$ around $x_i$ \\
-	\hspace*{\algorithmicindent} \textbf{Output}\textbf{:} $\hat{L}(x_i)$\textbf{:} local Lipschitz estimation value computed using equation 1
-	\begin{algorithmic}[1]
-		\State $\hat{L}(x_i) \gets \operatorname*{argmax}_{x_j \in N_\epsilon(x_i)} \frac{||f(x_i) - f(x_j)||_2}{||x_i - x_j||_2}$ \Comment {equation 1}
-		\State \textbf{return} $\hat{L}(x_i)$
-
-	\end{algorithmic}
-\end{algorithm}
+To be more elaborative, Line~\ref{algo:line:lipscitz_estimation_neighbourhood}
+takes 1)  point of interest $x_i$, which requires a local Lipschitz estimation. 2) all the test-set points $ \in X$. 3) the value $\epsilon$ to define the radius. Given the inputs, it calculates the Euclidean distances from point $x_i$ to all points in $X$. If the distance is less than or equal to $\epsilon$ then the point $x_j \in X$ then a point $x_j$ is considered to be in a neighbourhood $N_{\epsilon}(x_i)$. Once the neighrbouring points are found for any point $x_i$, a local Lipschitz estimation value can be calculated (Line~\ref{algo:line:lipscitz_estimation_calculation}) and after the calculation a value as $L(x_i)$ is returned.
 
 \subsubsection{Lipschitz Estimation as a Robustness Measure}\label{sec:lipschitz_estimation_as_a_robustness_measure} %% \subsubsection
-At the beginning, Section~\ref{sec:defining_explanation_evaluation_framework} mentioned that local Lipschitz estimation measure relative deviations inside the neighbourhood input space. To support the argument, Figure~\ref{fig:alvarez2018_robustness_figure2} from \citep{alvarez2018robustness} helps to demonstrates that how $\hat{L}(x_i)$ computed by above mechanism describe the relative deviations. The idea is to find the worst-case deviation point $x_j$ which maximise the equation (1) from point of interest $x_i$. For instance, in Figure~\ref{fig:alvarez2018_robustness_figure2} from \citep{alvarez2018robustness} the examples from the BOSTON dataset show that however, the point of interests are incredibly similar, but their explanations by each method for the model’s prediction vary considerably. It also depicts that maximizing equation (1) for $x_i$ measures relative deviation and allows us to enforce the robustness mechanism on explanations methods.
+At the beginning, Section~\ref{sec:defining_explanation_evaluation_framework} mentioned that local Lipschitz estimation measure relative deviations inside the neighbourhood input space. To support the argument, Figure~\ref{fig:alvarez2018_robustness_figure2} from \citep{alvarez2018robustness} helps to demonstrate that how $L(x_i)$ computed by above mechanism describe the relative deviations. The idea is to find the worst-case deviation point $x_j$ which maximise the \eqref{eq:lipschitz_estimation} from point of interest $x_i$. For instance, in Figure~\ref{fig:alvarez2018_robustness_figure2} from \citep{alvarez2018robustness} the examples from the BOSTON dataset show that however, the point of interests are incredibly similar, but their explanations by each method for the model’s prediction vary considerably. It also depicts that maximizing \eqref{eq:lipschitz_estimation} for $x_i$ measures relative deviation and allows us to enforce the robustness mechanism on explanations methods.
 \begin{figure}[H]
 	\includegraphics[width=1.0\linewidth]{alvarez2018_robustness_figure2}
 	\vspace*{-10mm}
-	\caption{LIME and SHAP explanations deviation examples: \citep{alvarez2018robustness}: \textbf{Top}: example $x_i$ from the BOSTON dataset and its explanations (attributions). \textbf{Bottom}: explanations for the maximizer of the Lipschitz estimate $L(x_i)$ as per equation (1).}
+	\caption{LIME and SHAP explanations deviation examples: \citep{alvarez2018robustness}: \textbf{Top}: example $x_i$ from the BOSTON dataset and its explanations (attributions). \textbf{Bottom}: explanations for the maximizer of the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation}.}
 	\label{fig:alvarez2018_robustness_figure2}
 \end{figure}
-
-
 
 
 %Quick comment on Alg. 1: it is not clear from the algorithm what is being computed there. Presumably for each $x_{i}$ in X you want to compute maximal |f(x)-f($x_{i}$)|/[x-$x_{i}$| where $x \in N(x_{i})?$ You could also explain what the numbers in Tab. 1 are. The level of detail here is such that I could replicate your experiment, if I had the data and if I wanted to. E.g., you need to be more explicit in the algorithm and also define what you mean by “aggregation” in Tab. 1.
