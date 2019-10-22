@@ -136,6 +136,13 @@
 %\usepackage{cite}
 \usepackage{natbib}
 
+%% package up greek math symbols
+%\usepackage[upgreek, LGRgreek]{mathastext}
+%\usepackage{bm}
+
+\usepackage{newtxtext}
+\usepackage[slantedGreek]{newtxmath}
+
 %% NEW COMMANDS
 % Algorithm definitions
 \newcommand{\commentsymbol}{//}% or \% or $\triangleright$
@@ -147,6 +154,12 @@
 \newcommand{\MultiLineComment}[2][\algorithmicindent]{\Statex \hspace{#1}\multicommentsymbolstart{} #2 \multicommentsymbolend{}}
 \newcommand{\onespace}{\;}
 \newcommand{\twospaces}{\;\;}
+% {\rm I\!R}^n = {\mathbb{R}}^n
+
+%% Declare math alphabets or operators
+\DeclareMathAlphabet{\mathsf}{OT1}{\sfdefault}{m}{n} % newtxmath has T1
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
 
 \graphicspath{{./plots/}}
 \begin{document}
@@ -361,7 +374,7 @@ This section explains the methodologies which are carried from research to measu
 
 On a high-level, the steps work as follow. 1) Predictive models are trained to perform classification tasks; these models behave as black-box models in the process. 2) Explanation methods interpret black-box models to find the reasons behind the predictions. 3) Explanations robustness is measured using local Lipschitz estimation technique \citep{alvarez2018robustness}.
 
-Let $f_c: X \mapsto y$ as a black-box classifier who classifies $x \in X; X = {\rm I\!R}^d$ to class $y, y \in \{c_1, \dots, c_n\}$. Now, let $z \in X$ be an instance from input space which requires an explanation for a prediction $f_c(z) = c_z$. An explanation model $f_e(z)$ outputs an explanation feature vector $ e = {\rm I\!R}^d$ for which the estimation of robustness or stability is required. The main objective of this section is to define the notion of stability using local Lipschitz esitmation which requires a neighborhood $N_{\epsilon}(z)$ around an instance $z \in X$. Verbally, the notion of stability is the estimation of \textit{"how similar are the explanations for similar instances"} and vice versa indicates the notion of unstabiliy.
+Let $f_c: X \mapsto y$ as a black-box classifier who classifies $x \in X; X = {\mathbb{R}}^d$ to class $y, y \in \{c_1, \dots, c_n\}$. Now, let $z \in X$ be an instance from input space which requires an explanation for a prediction $f_c(z) = c_z$. An explanation model $f_e(z)$ outputs an explanation feature vector $ e = {\mathbb{R}}^d$ for which the estimation of robustness or stability is required. The main objective of this section is to define the notion of stability using local Lipschitz esitmation which requires a neighborhood $N_{\epsilon}(z)$ around an instance $z \in X$. Verbally, the notion of stability is the estimation of \textit{"how similar are the explanations for similar instances"} and vice versa indicates the notion of unstabiliy.
 
 An overview of predictive models and explanation methods is presented in Section 3.1 and Section 3.2, respectively. Section~\ref{sec:defining_similarity} defines similarity measure and Section~\ref{sec:defining_explanation_evaluation_framework} formalize the robustness measure and presents algorithms used in the implementation.
 
@@ -403,26 +416,81 @@ An overview of predictive models and explanation methods is presented in Section
 %	\item \textit{- Add figure for an explanation}
 %\end{itemize}
 
-%An explanation can be presenting textual or visual artefacts that show the relationship between an instance's features and model's prediction. A critical argument is what if an explanation is not intelligible, therefore it is essential to make it faithful and understandable. Figure~\ref{fig:ribeiro2016_lime_figure1} is illustrating the case where a doctor can utilise the model explanation to make a decision. Here, an explanation is a small set of symptoms with some weights associated with them; green indicates symptom contribution and red shows that the symptom is against it. It can aid the decision-making where a domain expert can accept or reject the explanation based on his prior knowledge.
-
-%\begin{figure}[H]
-%	\includegraphics[width=1.0\linewidth]{ribeiro2016_lime_figure1}
-%	\vspace*{-10mm}
-%	\caption{LIME: \citep{ribeiro2016should}: }
-%	\label{fig:ribeiro2016_lime_figure1}
-%\end{figure}
-%
-%
-%\begin{wrapfigure}{r}{0.5\textwidth}
-%	\centering
-%	\vspace*{-2mm}
-%	\includegraphics[width=1.0\linewidth]{ribeiro2016_lime_figure2}
-%	\vspace*{-10mm}
-%	\caption{LIME: \citep{ribeiro2016should}: }
-%	\label{fig:ribeiro2016_lime_figure2}
-%\end{wrapfigure}
+%The machine learning is a core element in the advancement of science and technology. However, in comparison to the technological progress in the field, the social aspects and trust concerns are neglected. Today, industrial digitalisation is impacting humans directly, and a wide range of machine learning models often deployed in products and services contribute to it. The main concern remains the same as  "if the users can trust the predictions and models". It is useful to highlight two aspects of trust here 1) \textit{"trust in the prediction"} that whether users can trust the prediction and decide based on it. 2) \textit{"trust in the model"} that whether users can trust and understand the overall behaviour of the model, not assuming it as some black-box.
 %
 %In addition to trust concerns, it is worthwhile to measure the model's behaviour before deploying it in the wild. Often, the accuracy metric is used to evaluate the model on unseen data, but it may not indicates the product's goal every time. Inspecting multiple instances from large datasets and their explanations can aid to reduce the blind faith on accuracy measure. Local Interpretable Model-agnostic Explanations (LIME) provides an individual explanation as a solution to \textit{"trust in the prediction"} and giving multiple such explanations as an approximate answer to \textit{"trust in the model"} problem.
+
+
+Local Interpretable Model-agnostic Explanations (LIME) \citep{ribeiro2016should} is an explanation method which approximates the explanations for individual predictions of any classifier or regressor. The motivation behind LIME is simple; imagine there is a black box model which is trained on some data and gives predictions for new data points. LIME tries to explain a specific prediction of the black-box model by fitting the interpretable model locally. It trains the local interpretable model in a selected local vicinity around a point of interest. A new training dataset which contains permuted samples and corresponding predictions by the black-box model is used to train and evaluate the local interpretable model. 
+
+The generated explanations can be textual or visual artefacts that show the relationship between an instance's features and the model's prediction. A critical argument here is what if an explanation is not intelligible, therefore it is essential to make it faithful and understandable. Figure~\ref{fig:ribeiro2016_lime_figure1} is illustrating the case where a doctor can utilise the model explanation to make a decision. Here, an explanation is a small set of symptoms with some weights associated with them; green indicates positive contribution where red shows that the symptom is contributing negatively. It helps in the decision-making where a domain expert can accept or reject the explanation based on his prior knowledge.
+
+\begin{figure}[H]
+	\includegraphics[width=1.0\linewidth]{ribeiro2016_lime_figure1}
+	\vspace*{-10mm}
+	\caption{LIME: \citep{ribeiro2016should}: }
+	\label{fig:ribeiro2016_lime_figure1}
+\end{figure}
+
+%Important Points
+%Explaining several representative instances.
+%Selecting the trustworthy model using explanations
+
+%Outline evaluation characteristics
+%	Interpretability of explanations -- understanable
+%	Local fidelity -- faithfulness
+%	Global perspective -- selecting few explanations as representative of model
+
+LIME \citep{ribeiro2016should} explainer focuses on mainly two essential criteria while generating explanations. The first one is that any explanation should be \textbf{interpretable}, i.e., the relationship between input variables and the output prediction should be easily understandable by users. Here, defining what is interpretable varies based on the target audience, e.g., users can be layman or machine learning experts. However, the bottom line is, an explanation should be simple enough to comprehend. Regardless of the hundreds or thousands of input variables used in the black-box model, there should be a mechanism to control the complexity of explanation.
+
+The second one is a \textbf{local fidelity} which means that local interpretable model should be faithful in the locality around a point of prediction being explained. Though local faithfulness may not show features which are important at the global level, several explanations can be shown to give a global perspective. It is due to that LIME does not generate the faithful global explanation, which remains a complex problem to solve. Now keeping these two criteria LIME \citep{ribeiro2016should} provides a mechanism to produce an explanation which is interpretable and locally faithful using interpretable model.
+
+Let $g \in G$ is an explanation model where $G$ is a class of \textit{interpretable models} such as linear models or decision trees. As explanation should be simple enough to understand so the domain of  $g$ is $\{0, 1\}^{d'}$, which indicates the absence/presence of the component in its interpretable representation. Note the original representation of an instance being explained is $x \in \mathbb{R}^d$ but to make an explanation interpretable, a binary vector representation $x' \in \{0, 1\}^{d'}$ is used as an interpretable representation. Moreover, $\upOmega(g)$ is used as a measure to control the complexity to ensure the \textit{interpretability} of an explanation model $g \in G$. For instance, in the case of linear models, the complexity factor can be the number of non-zero weights, whereas, it may be the depth of the tree for decision trees.
+
+Now, let $f: \mathbb{R}^d \mapsto \mathbb{R}$ denotes a model being explained and $f(x)$ is a probability funtion which tells that $x$ belongs to certain class. To explain the prediction locally, $\pi_x(z)$ is used as a proximity measure between an instance $z$ to $x$ to define locality around $x$. In the original work \citep{ribeiro2016should} $\pi_x(z)$ is set to a exponential kernel $\exp{-D(x,z)^2/\sigma^2}$ defined on some distance measure $D$ with width $\sigma$.
+Finally, the explanation can be produced using \eqref{eq:lime_generate_explanaton} where $\mathcal{L}(f, g, \pi_x)$ is a measure which tells that how unfaithful $g$ is in approximating $f$ in the locality defined by $\pi_x$. The goal is to minmize the $\mathcal{L}(f, g, \pi_x)$ and keeping $\upOmega(g)$ small enough to produce understandable explanation.
+
+\begin{equation}\label{eq:lime_generate_explanaton}
+\mathsf{\upxi}(x) = \argmin_{g \in G} \mathcal{L}(f, g, \pi_x) + \upOmega(g)
+\end{equation}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\centering
+	\vspace*{-2mm}
+	\includegraphics[width=1.0\linewidth]{ribeiro2016_lime_figure2}
+	\vspace*{-10mm}
+	\caption{LIME: \citep{ribeiro2016should}: }
+	\label{fig:ribeiro2016_lime_figure2}
+\end{wrapfigure}
+
+Now, let $f: \mathbb{R}^d \mapsto \mathbb{R}$ denotes a model being explained and $f(x)$ is a probability funtion which tells that $x$ belongs to certain class. To explain the prediction locally, $\pi_x(z)$ is used as a proximity measure between an instance $z$ to $x$ to define locality around $x$. In the original work \citep{ribeiro2016should} $\pi_x(z)$ is set to a exponential kernel $\exp{-D(x,z)^2/\sigma^2}$ defined on some distance measure $D$ with width $\sigma$.
+Finally, the explanation is produced using \eqref{eq:lime_measure_unfaithfulness} where $\mathcal{L}(f, g, \pi_x)$ is used as a measure which tells that how unfaithful $g$ is in approximating $f$ in the locality defined by $\pi_x$. The goal is to minmize the $\mathcal{L}(f, g, \pi_x)$ and keeping $\upOmega(g)$ small enough to produce understandable explanation.
+
+\begin{equation}\label{eq:lime_measure_unfaithfulness}
+\mathcal{L}(f, g, \pi_x) = \sum_{z, z{'} \in Z} \pi_x(z)\onespace(f(z) - g(z'))^2
+\end{equation}
+
+
+%G$ class of interpretable models. \newline
+%$g \mapsto \{0, 1\}^{d'}$ \newline
+%$\mathbb{R}^d$ is a original representation. \newline
+%$\{0, 1\}^{d'}$ is a binary vector for interpretable representation. \newline
+%$\upOmega(g)$ measure complexity of explanation (as opposed to interpretability). \newline
+
+%$f: \mathbb{R}^d \mapsto \mathbb{R}$ denotes model being explained. \newline
+%$f(x)$ is a probability function indicates that $x$ belongs to certain class. \newline
+%$\pi_x(z)$ is proximity measure between an instance $z$ to $x$ to define locality around $x$. \newline
+%$\pi_x(z)$ = $\exp{-D(x,z)^2/\sigma^2}$ \newline
+%$\mathcal{L}(f, g, \pi_x)$ be a measure that how unfaithful $g$ is in approximating $f$ in the locality defined by $\pi_x$. \newline
+
+
+
+
+
+
+
+
+
 
 \subsubsection{Shapley Values (SHAP)} %\subsubsection{}
 %\textit{Sub-section Scope.}
@@ -439,25 +507,24 @@ To formulate the explanation evaluation framework the pre-requistie is to specif
 \begin{equation}\label{eq:euclidean_distance}
 d(x,y) = d(y,x) = \sqrt{\sum_{i=1}^{n}(x_i - y_i)^2}
 \end{equation}
-
 Using Euclidean distance choice, it is straightforward to define a small neighbourhood around any instance. However, estimating neighbourhood is challenging task itself, but euclidean distance allows us to find similar points trivially. The Definition~\ref{def:1} and Definition~\ref{def:2} formalize the notion of defining a ball of radius $r$ centered at instance $a$ as a neighbourhood policy. The subtle difference between the definitions is that closed balls contain all "exterior" points as compared to open balls.
 
-\begin{definition}\label{def:1}{Let $a \in {\rm I\!R}^n$: Then the \textbf{Open Ball centered at $a$ with Radius $r > 0$} denoted $B_{r}(a)$ is defined to be a set of all points $x \in {\rm I\!R}^n$ such that $||x-a|| < r$, that is, $\{x \in {\rm I\!R}^n |\;||x - a|| < r\}.$}
+\begin{definition}\label{def:1}{Let $a \in {\mathbb{R}}^n$: Then the \textbf{Open Ball centered at $a$ with Radius $r > 0$} denoted $B_{r}(a)$ is defined to be a set of all points $x \in {\mathbb{R}}^n$ such that $||x-a|| < r$, that is, $\{x \in {\mathbb{R}}^n |\;||x - a|| < r\}.$}
 \end{definition}
-Now, if n=2 then for each $a = (a_1,a_2) \in {\rm I\!R}^2$ and $r \in {\rm I\!R}^2$ where $r > 0$ we have an open ball centered at $a$ with radius $r$ is:
+Now, if n=2 then for each $a = (a_1,a_2) \in {\mathbb{R}}^2$ and $r \in {\mathbb{R}}^2$ where $r > 0$ we have an open ball centered at $a$ with radius $r$ is:
 \begin{align*}
-B_{r}(a) = \{x \in {\rm I\!R}^2\ : \sqrt{(x_1 - a_1)^2 + (x_2 - a_2)^2} < r\}
+B_{r}(a) = \{x \in {\mathbb{R}}^2\ : \sqrt{(x_1 - a_1)^2 + (x_2 - a_2)^2} < r\}
 \end{align*}
 
 %% Definition of closed ball
-\begin{definition}\label{def:2}{Let $a \in {\rm I\!R}^n$: Then the \textbf{Closed Ball centered at $a$ with Radius $r > 0$} denoted $B_{r}(a)$ is defined to be a set of all points $x \in {\rm I\!R}^n$ such that $||x-a|| \leq r$, that is, $\{x \in {\rm I\!R}^n |\;||x - a|| \leq r\}.$}
+\begin{definition}\label{def:2}{Let $a \in {\mathbb{R}}^n$: Then the \textbf{Closed Ball centered at $a$ with Radius $r > 0$} denoted $B_{r}(a)$ is defined to be a set of all points $x \in {\mathbb{R}}^n$ such that $||x-a|| \leq r$, that is, $\{x \in {\mathbb{R}}^n |\;||x - a|| \leq r\}.$}
 \end{definition}
-And, if n=2 then for each $a = (a_1,a_2) \in {\rm I\!R}^2$ and $r \in {\rm I\!R}^2$ where $r > 0$ we have the closed ball centered at $a$ with radius $r$ is:
+And, if n=2 then for each $a = (a_1,a_2) \in {\mathbb{R}}^2$ and $r \in {\mathbb{R}}^2$ where $r > 0$ we have the closed ball centered at $a$ with radius $r$ is:
 \begin{align*}
-B_{r}(a) = \{x \in {\rm I\!R}^2\ : \sqrt{(x_1 - a_1)^2 + (x_2 - a_2)^2} \leq r\}
+B_{r}(a) = \{x \in {\mathbb{R}}^2\ : \sqrt{(x_1 - a_1)^2 + (x_2 - a_2)^2} \leq r\}
 \end{align*}
 
-Now, using above definitions and \eqref{eq:euclidean_distance} an neighbouhood term can be defined as below \eqref{eq:neighbourhood}. It is useful especially relevant for a next section where neighbourhood policy is required to measure the \textit{robustness} for explanations. 
+Now, a neighbouhood term can be defined as below \eqref{eq:neighbourhood} using above definitions and \eqref{eq:euclidean_distance}. It is useful especially relevant for a next section where neighbourhood policy is required to measure the \textit{robustness} for explanations. 
 
 \begin{equation}\label{eq:neighbourhood}
 N_{\epsilon}(x_i) = \{x_j \in X| \onespace d(x_i, x_j) \leq \epsilon\}
@@ -483,7 +550,7 @@ Figure~\ref{fig:alvarez2018_robustness_figure1} presented in original work \cite
 
 In light of this, Lipschitz continuity as function stability has been suggested to measure the relative change in output concerning the inputs. It measures the substantial relative deviations (global) throughout the input space. Since in the context of interpretable methods, explanations do not require uniformity for very distant inputs. Therefore, a local notion of stability (Definition~\ref{def:3}) has been proposed in the form of local Lipschitz continuity (Hein and Andriushchenko, 2017; Weng et al., 2018), which measure the relative deviations in a small neighbourhood input space.
 \begin{definition}\label{def:3}{\textit{local notion of stability}:}
-	$f: X \subseteq {\rm I\!R}^n \rightarrow {\rm I\!R}^m$ is \textbf{\textit{locally Lipschitz}} \textit{if for every $x_0$ there exist $\delta > 0$ and $L \in {\rm I\!R}$ such that $||x - x_0|| < \delta$ implies $||f(x) - f(x_0)|| \leq L||x - x_0||$.}
+	$f: X \subseteq {\mathbb{R}}^n \rightarrow {\mathbb{R}}^m$ is \textbf{\textit{locally Lipschitz}} \textit{if for every $x_0$ there exist $\delta > 0$ and $L \in {\rm I\!R}$ such that $||x - x_0|| < \delta$ implies $||f(x) - f(x_0)|| \leq L||x - x_0||$.}
 \end{definition}
 
 In the Definition~\ref{def:3}, $\delta$ and $L$ are dependent on a point of interest $x_i$. It allows quantifying the robustness of the explanations generated by a model $f$ in terms of constant $L$. Usually, this term is not known, and it requires an estimation. One straightforward way to solve it for every point of interest $x_i$ is to do as an optimization problem \eqref{eq:lipschitz_estimation}.
@@ -519,7 +586,7 @@ Moving towards algorithmic functionality, Algorithm~\ref{algo:lipscitz_estimatio
 \end{algorithm}
 
 To be more elaborative, Line~\ref{algo:line:lipscitz_estimation_neighbourhood}
-takes 1)  point of interest $x_i$, which requires a local Lipschitz estimation. 2) all the test-set points $ \in X$. 3) the value $\epsilon$ to define the radius. Given the inputs, it calculates the Euclidean distances from point $x_i$ to all points in $X$. If the distance is less than or equal to $\epsilon$ then the point $x_j \in X$ then a point $x_j$ is considered to be in a neighbourhood $N_{\epsilon}(x_i)$. Once the neighrbouring points are found for any point $x_i$, a local Lipschitz estimation value can be calculated (Line~\ref{algo:line:lipscitz_estimation_calculation}) and after the calculation a value as $L(x_i)$ is returned.
+takes 1)  point of interest $x_i$, which requires a local Lipschitz estimation. 2) all the test-set points $ \in X$. 3) the value $\epsilon$ to define the radius. Given the inputs, it calculates the Euclidean distances from point $x_i$ to all points in $X$. If the distance is less than or equal to $\epsilon$ then the point $x_j \in X$ then a point $x_j$ is considered to be in a neighbourhood $N_{\epsilon}(x_i)$. Once the neighrbouring points are found for any point $x_i$, a local Lipschitz estimation value can be calculated (Line~\ref{algo:line:lipscitz_estimation_calculation}) and after the calculation a value is returned.
 
 \subsubsection{Lipschitz Estimation as a Robustness Measure}\label{sec:lipschitz_estimation_as_a_robustness_measure} %% \subsubsection
 At the beginning, Section~\ref{sec:defining_explanation_evaluation_framework} mentioned that local Lipschitz estimation measure relative deviations inside the neighbourhood input space. To support the argument, Figure~\ref{fig:alvarez2018_robustness_figure2} from \citep{alvarez2018robustness} helps to demonstrate that how $L(x_i)$ computed by above mechanism describe the relative deviations. The idea is to find the worst-case deviation point $x_j$ which maximise the \eqref{eq:lipschitz_estimation} from point of interest $x_i$. For instance, in Figure~\ref{fig:alvarez2018_robustness_figure2} from \citep{alvarez2018robustness} the examples from the BOSTON dataset show that however, the point of interests are incredibly similar, but their explanations by each method for the model’s prediction vary considerably. It also depicts that maximizing \eqref{eq:lipschitz_estimation} for $x_i$ measures relative deviation and allows us to enforce the robustness mechanism on explanations methods.
