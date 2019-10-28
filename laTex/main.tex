@@ -139,9 +139,14 @@
 %% package up greek math symbols
 %\usepackage[upgreek, LGRgreek]{mathastext}
 %\usepackage{bm}
-
 \usepackage{newtxtext}
 \usepackage[slantedGreek]{newtxmath}
+
+%% package for adding properties
+\usepackage{enumitem}
+\newlist{properties}{enumerate}{2}
+%\setlist[properties]{label=\textbf{Property} \arabic*.,itemindent=*}
+\setlist[properties]{label=\textbf{Property} \arabic*, wide, labelwidth=!,labelindent=0pt}
 
 %% NEW COMMANDS
 % Algorithm definitions
@@ -182,20 +187,48 @@
 %	\item \textit{Go through artificial intelligence, machine learning and the need of explainable machine-learning.}
 %	\item - \textit{Add figure or diagram to show the relation among these fields.}
 %\end{itemize} 
-%\par Over a hundred years ago, scientists believed in a dream of having a computer programme who can think and learn like humans. Back then visualizing it would have been a mythical desire, but it is no longer an unrealistic aspiration. Artificial intelligence (AI) is now a growing arena, impacting on every aspect of research and business. Users do not often realize, but a simple Google search involves complex AI algorithms running behind the scenes. From intelligent software to automate routine labor or to make diagnoses in medicine, AI has a wide range of active experimentation topics and practical plans. \par
-%Though most of the services and products are incorporating AI enhancements, often the core definitions of AI, machine learning (ML), and deep learning (DL) conceive some confusion. \citet{Goodfellow-et-al-2016} provides thorough explanations which describe the relationship among these fields. A logical inference by a machine, based on a list of formal mathematical rules expresses an early concept of AI. In contrast to hard-coded rules, the capability of solving intuitive problems which involve an ability to learn from the knowledge, and make decisions is machine learning (ML). A simple machine learning algorithm can recommend a book based on user history, or it can filter an email as spam or legitimate. \par
-%However, in real-world applications, algorithms require an in-depth representation of data to learn and decide. For instance, speech or image detection needs a sophisticated, approximately human-level recognition. Deep learning (DL) undertakes these problematic tasks; it builds a complex representation by combining simple concepts in a hierarchy, such as combining the corners and edges of a car image \citep{Goodfellow-et-al-2016}. Deep Learning also expands the horizons to solve complicated, real-time learning problems, e.g., autonomous cars, language translations, and chatbots. Such deep models are becoming more accurate in learning, though the explanation behind the predictive performance gets compromised \citep{lipton2016mythos, ribeiro2016should, lundberg2017unified}. \par
-%Moreover, providing a consistent, human understandable explanation is nearly impossible when an algorithm complexity is substantial. Such models become black boxes which are hard to interpret, affecting user's trust, thus, raising many concerns about transparency and interpretability. Explainable machine learning addresses these problems and aims to make machine learning interpretable and understandable to everyday users. \par
 
-%However, it is difficult in some cases where an algorithm complexity is substantial and providing a consistent, human understandable explanation is nearly impossible. Such models become black boxes which are hard to interpret and more vulnerable especially in high-security systems. An increasing amount of black box models have raised many concerns about their interpretability. Explainable machine learning (XML) addresses these problems and aim to make machine learning interpretability and understandable.
+%\begin{itemize}
+%	
+%\item This starts from quite high-flying premise. :) As a general comment, it is good to review the background, but then you should in the end explicitly state what is the topic here. The topic of this thesis is not AI or ML in general, but more specifically predictive models (i.e., supervised learning) and explanations of it.
+%
+%\item Someone might argue that rule-based reasoning does not necessarily involve only hard-coded rules. See, e.g., https://mitpress.mit.edu/books/constraint-based-reasoning
+%
+%\item Again, in this thesis, is the topic generic ML algorithms inclusive of recommender systems, or "only" supervised learning?
+%\end{itemize} 
+
+The machine learning is a core element in the advancement of science and technology. However, in comparison to the technological progress in the field, the social aspects and trust concerns are neglected. Today, a wide range of predictive machine learning models are being used in digital products and services. The main concern of the users remains the same as \textit{"if they can trust the machine learning models and their predictions"}? It is essential to have trust and transparency in models because it increases the quality of services and the number of users. Though providing an understandable explanation behind the predictions and the overall model is a complicated task \citep{lipton2016mythos}.
+
+Such unexplainable models become black boxes to the users, affecting user's trust and raise concerns about transparency and interpretability.
+On the other side, experts who build models to solve complex problems, mainly utilise standard accuracy measures to evaluate the models. These measures may not indicate the product's goal every time, and having blind faith in such measures can harm the service quality \citep{lipton2016mythos, guidotti2018survey}. Explanation methods strive to solve these issues and aim to make machine learning interpretable and debuggable \citep{guidotti2018survey}.
+
+LIME (Local Interpretable Model-Agnostic Explanations) \citep{ribeiro2016should}, and SHAP (Shapely Additive Explanations) \citep{lundberg2017unified} are few among the prominent explanation methods. These methods can interpret and debug any classifier trained on any dataset such as tabular, text or image. In simple words; these methods explain the model predictions in a human-interpretable way. Despite, they lack to explain the overall behaviour of a predictive model, which remains a complex problem to solve. One proposed solution to explain the model's functionality is explaining multiple instances which capture the global perspective of a predictive model \citep{ribeiro2016should}.
 
 
-\subsection{Background} %\subsection{}
+Needs mentioned above for making predictive models interpretable has established a new sub-field, Explainable Machine Learning. It primarily focuses on finding the answers to research questions, i.e., \textit{How to define a human-interpretable explanation? How to define the evaluation measures for explanations?} \citep{adhikari2018example, honegger2018shedding}. In the light of this, \citet{alvarez2018robustness} proposed a robustness measure to evaluate the stability of explanations generated by several explanation methods. This work strives to replicate the desired functionality introduced in \citep{alvarez2018robustness} and evaluates explanation methods (LIME and SHAP) on various classification models and datasets.
+
+%The main concern remains the same as  "if the users can trust the predictions and models". It is useful to highlight two aspects of trust here 1) \textit{"trust in the prediction"} that whether users can trust the prediction and decide based on it. 2) \textit{"trust in the model"} that whether users can trust and understand the overall behaviour of the model, not assuming it as some black-box.
+%
+%In addition to trust concerns, it is worthwhile to measure the model's behaviour before deploying it in the wild. Often, the accuracy metric is used to evaluate the model on unseen data, but it may not indicates the product's goal every time. Inspecting multiple instances from large datasets and their explanations can aid to reduce the blind faith on accuracy measure. Local Interpretable Model-agnostic Explanations (LIME) provides an individual explanation as a solution to \textit{"trust in the prediction"} and giving multiple such explanations as an approximate answer to \textit{"trust in the model"} problem.
+
+
+%Over a hundred years ago, scientists believed in a dream of having a computer programme who can think and learn like humans. Back then visualizing it would have been a mythical desire, but it is no longer an unrealistic aspiration. Artificial intelligence (AI) is now a growing arena, impacting on every aspect of research and business. Users do not often realize, but a simple Google search involves complex AI algorithms running behind the scenes. From intelligent software to automate routine labor or to make diagnoses in medicine, AI has a wide range of active experimentation topics and practical plans.
+%
+%Though most of the services and products are incorporating AI enhancements, often the core definitions of AI, machine learning (ML), and deep learning (DL) conceive some confusion. \citet{Goodfellow-et-al-2016} provides thorough explanations which describe the relationship among these fields. A logical inference by a machine, based on a list of formal mathematical rules expresses an early concept of AI. In contrast to hard-coded rules, the capability of solving intuitive problems which involve an ability to learn from the knowledge, and make decisions is machine learning (ML). A simple machine learning algorithm can recommend a book based on user history, or it can filter an email as spam or legitimate.
+%
+%However, in real-world applications, algorithms require an in-depth representation of data to learn and decide. For instance, speech or image detection needs a sophisticated, approximately human-level recognition. Deep learning (DL) undertakes these problematic tasks; it builds a complex representation by combining simple concepts in a hierarchy, such as combining the corners and edges of a car image \citep{Goodfellow-et-al-2016}. Deep Learning also expands the horizons to solve complicated, real-time learning problems, e.g., autonomous cars, language translations, and chatbots. Such deep models are becoming more accurate in learning, though the explanation behind the predictive performance gets compromised \citep{lipton2016mythos, ribeiro2016should, lundberg2017unified}.
+%
+%Moreover, providing a consistent, human understandable explanation is nearly impossible when an algorithm complexity is substantial. Such models become black boxes which are hard to interpret, affecting user's trust, thus, raising many concerns about transparency and interpretability. Explainable machine learning addresses these problems and aims to make machine learning interpretable and understandable to everyday users.
+
+%[ IMPROVEMENT REQUIRED However, it is difficult in some cases where an algorithm complexity is substantial and providing a consistent, human understandable explanation is nearly impossible. Such models become black boxes which are hard to interpret and more vulnerable especially in high-security systems. An increasing amount of black box models have raised many concerns about their interpretability. Explainable machine learning (XML) addresses these problems and aim to make machine learning interpretability and understandable. IMPROVEMENT REQUIRED ]
+
+%\subsection{Background} %\subsection{}
 %\textit{Sub-section Scope.}
 %\begin{itemize}
 %	\item \textit{Explain the background of a problem.}
 %\end{itemize}
-%AIqballabs.ai has supported this thesis project, which adds valuable work to provides a new explanation evaluation scheme for state-of-art explanation methods. AIqballabs.ai is a digital initiative and platform about Artificial Intelligence and its ethical values. It aims to contribute and increase awareness of implementing explainable machine learning on a practical scale. It invites professionals and students from diverse backgrounds to participate and learn about how interpretability and explainability in Artificial Intelligence impact positively on our society.
+
+% [ IMPROVEMENT REQUIRED AIqballabs.ai has supported this thesis project, which adds valuable work to provides a new explanation evaluation scheme for state-of-art explanation methods. AIqballabs.ai is a digital initiative and platform about Artificial Intelligence and its ethical values. It aims to contribute and increase awareness of implementing explainable machine learning on a practical scale. It invites professionals and students from diverse backgrounds to participate and learn about how interpretability and explainability in Artificial Intelligence impact positively on our society. IMPROVEMENT REQUIRED ]
 
 \subsection{Motivation} %\subsection{}
 %\textit{Sub-section Scope.}
@@ -204,37 +237,35 @@
 %	\item \textit{Write why its important to solve the issue.}
 %	\item \textit{Write high-level definition of relevant sub-problem.}
 %\end{itemize}
-%An increasing amount of real-time intelligent services have established the user needs for trust and transparency. In simple cases, users simply put trust on a system and do not feel the urgency of receiving an explanation behind predictions, e.g. email spam filtering. However, in advanced applications, consumers desire to know the rational logic behind specific predictions. For instance, patients who use online medical assistants often require that how a certain medicine is predicted by a system. \par
-%On the other side, critical services who are using intricate machine learning models try to provide explanations to non-technical users, but it is a challenging task. Due to lack of transparency, users perceive unclarity, which directly impacts on the trust factor and services. This research project aims to explore one of the piece of this challenging problem. It focuses on how existing explanations methods interpret machine learning classification models and how to evaluate and compare them.
+
+%An increasing amount of real-time intelligent services have established the user needs for trust and transparency. In simple cases, users simply put trust on a system and do not feel the urgency of receiving an explanation behind predictions, e.g. email spam filtering. However, in advanced applications such as recommendation systems, users desire to know the rational logic behind the predictions.
+%
+%On the other side, services which use machine learning models aim to provide explanations to non-technical users, but it is a challenging task. Due to lack of transparency, users perceive unclarity, which directly impacts on the trust factor and services. This research project aims to explore one of the piece of this challenging problem. It focuses on how existing explanations methods interpret machine learning classification models and how to evaluate and compare them.
+
+An increasing amount of real-time intelligent services have established the user needs for trust and transparency. In simple cases, users trust a system, e.g. email spam filtering, but in other practical cases, users feel the urgency of receiving an explanation, i.e., loan rejection \citep{guidotti2018survey}. On the other side, services which aim to provide explanations to non-technical users need stable and consistent explanation methods. Failing to provide transparency can increase users concerns, which directly impacts the users' trust in services. Hence, a requirement is to make predictive models interpretable using explanation methods \cite{guidotti2018survey}. This research is motivated to explore the mechanism of comparing the explanation methods. It helps to select a suitable explanation method which produces a stable explanation when showing it to users.
 
 \subsection{Social and Ethical Concerns} %\subsection{}
-%\textit{Sub-section Scope.}
-%\begin{itemize}
-%	\item \textit{Write how machine learning and data usage is impacting society.}
-%	\item \textit{Write how these new technologies raising social and ethical concerns.}
-%	\item \textit{Highlight primary factors using some good examples.}
-%\end{itemize}
+By its very nature, black box models are more vulnerable especially in high-security systems it is mandatory to place a debuggable and interpretable model. Moreover, after data regulations users demands for explanations has increased, pushing companies to provide transparency. Particularly in sectors such as insurance, health or banking it is crucial to interpret predictive models which assists in decision-making. It is also important to emphasize that companies who often receive personal data consent from users appear suspicious whenever they operate opposite to users consent \citep{lipton2016mythos}. For example, annoying advertisements on Facebook based on browsing history, rejection of a bank loan applications by a system often ignite the user's critical reasoning \citep{honegger2018shedding}.
 
-%By its very nature, black box models are more vulnerable especially in high-security systems it is mandatory to place a debuggable and interpretable model. Moreover, after data regulations users demands for explanations has increased, pushing companies to provide transparency. Particularly in sectors such as insurance, health or banking it is crucial to interpret predictive models which assists in decision-making. It is also important to emphasize that companies who often receive personal data consent from users appear suspicious whenever they operate opposite to users consent \citep{lipton2016mythos}. For example, annoying advertisements on Facebook based on browsing history, rejection of a bank loan applications by a system often ignite the user's critical reasoning \citep{honegger2018shedding}. \par
-%In such cases where a user needs to know the reason behind a specific decision. The ethical aspect of machine learning gives a user right to ask about an explanation. It is essential to provide and accommodate user when he/she has some discrimination concerns. European union general data protection regulation (GDPR) empowers data subject in such situations and place regulations restrictions on businesses to provide necessary explanations \citep{doshi2017accountability, goodman2017european} . Article 13 and 14 in GDPR asserts that a data subject which is included in algorithmic decision-making has the right to ask “meaningful information about the logic involved” \citep{goodman2017european}.
+In such cases where a user needs to know the reason behind a specific decision. The ethical aspect of machine learning gives a user right to ask about an explanation. It is essential to provide and accommodate user when he/she has some discrimination concerns. European union general data protection regulation (GDPR) empowers data subject in such situations and place regulations restrictions on businesses to provide necessary explanations \citep{doshi2017accountability, goodman2017european} . Article 13 and 14 in GDPR asserts that a data subject which is included in algorithmic decision-making has the right to ask “meaningful information about the logic involved” \citep{goodman2017european}.
 
-%Increasing amount of these {\itshape Black Box} models are also raising societal and ethical concerns among communities. Intelligent machine learning models learn from the digital traces of people which serve as data features. Thus, in a case when a person needs to know a reason behind a specific decision taken by a system, which is his/her right as according to General Data Protection Regulation (GDPR) \cite{doshi2017accountability}, how these {\itshape Black Box} models contribute? Most of the these are incapable of providing an answer because they are hard to interpret. \newline
-%[ IMPROVEMENT REQUIRED Problems which are significantly essential to address are most often challenging to solve. Unfortunately, in March 2018 a self-driving car hit and killed the pedestrian in Tempe, Arizona \cite{uberselfdrivingcar}. Interpreting such Deep Neural Network (DNN) models can be very tricky due to the complex architectures, e.g. architecture for a self-driving car, probably manipulates millions of neurons and their activations which are difficult to interpret. This particular example is imperative because it also highlights the urgency of solving it. \newline IMPROVEMENT REQUIRED ]
+
+%[ IMPROVEMENT REQUIRED Increasing amount of these {\itshape Black Box} models are also raising societal and ethical concerns among communities. Intelligent machine learning models learn from the digital traces of people which serve as data features. Thus, in a case when a person needs to know a reason behind a specific decision taken by a system, which is his/her right as according to General Data Protection Regulation (GDPR) \citep{doshi2017accountability}, how these {\itshape Black Box} models contribute? Most of the these are incapable of providing an answer because they are hard to interpret.
+
+%Problems which are significantly essential to address are most often challenging to solve. Unfortunately, in March 2018 a self-driving car hit and killed the pedestrian in Tempe, Arizona \citep{uberselfdrivingcar}. Interpreting such Deep Neural Network (DNN) models can be very tricky due to the complex architectures, e.g. architecture for a self-driving car, probably manipulates millions of neurons and their activations which are difficult to interpret. This particular example is imperative because it also highlights the urgency of solving it. \newline IMPROVEMENT REQUIRED ]
+
 \subsection{Explanations in the context of Machine Learning} %\subsection{}
-%\textit{Sub-section Scope.}
-%\begin{itemize}
-%	\item \textit{Write about what are explanations in machine learning.}
-%	\item \textit{Highlight how explanations in machine learning address societal and ethical concerns.}
-%\end{itemize}
+In explainable machine learning, explanations established interpretability and transparency of a model by answering {\itshape "why question" } behind the predictions \citep{honegger2018shedding}. \citet{honegger2018shedding} further categorizes interpretability into three types: global model interpretability, algorithm interpretability, and local model interpretability. On the other hand, \citet{lipton2016mythos} suggests establishing interpretability by breaking explanations into two pieces, transparency and post-hoc explanations. First covers {\itshape "how the model works?"} and, the latter {\itshape "how much more model can tell about the predictions?"}.
 
-%In explainable machine learning, explanations established interpretability and transparency of a model by answering {\itshape "why question" } behind the predictions \citep{honegger2018shedding}. \citet{honegger2018shedding} further categorizes interpretability into three types: global model interpretability, algorithm interpretability, and local model interpretability. On the other hand, \citet{lipton2016mythos} suggests establishing interpretability by breaking explanations into two pieces, transparency and post-hoc explanations. First covers {\itshape "how the model works?"} and, the latter {\itshape "how much more model can tell about the predictions?"}. \par
-%These questions focus on finding possible ways to enhance user's trust in model and trust in predictions. Indeed, the answers to these questions vary and depend on the application domain. However, several explanation methods have been proposed which partially gives explanations for the model predictions. Though, due to a lack of consensus on {\itshape "what is a good explanation?"} solving these questions are challenging.\par
+These questions focus on finding possible ways to enhance user's trust in model and trust in predictions. Indeed, the answers to these questions vary and depend on the application domain. However, several explanation methods have been proposed which partially gives explanations for the model predictions. Though, due to a lack of consensus on {\itshape "what is a good explanation?"} solving these questions are challenging.
 
-%[ IMPROVEMENT REQUIRED To provide solutions to open {\itshape Black Box} models, researchers have suggested multiple frameworks and terminologies \cite{guidotti2018survey}.  \cite{lipton2016mythos} also categories the solution into two primary ways "transparency" and "post-hoc" explanations, first one covers the question of {\itshape "how the model works"} and, the latter one try to address {\itshape "how much more model can tell about the predictions."} 
-%One important thing is also discussing the difference between {\itshape interpretability } and {\itshape explanations.} \cite{honegger2018shedding} provides this differentiation by stating that explanations established interpretability of a model by answering {\itshape "why question" } behind the predictions.
+%[ IMPROVEMENT REQUIRED To provide solutions to open {\itshape Black Box} models, researchers have suggested multiple frameworks and terminologies \citep{guidotti2018survey}.  \citep{lipton2016mythos} also categories the solution into two primary ways "transparency" and "post-hoc" explanations, first one covers the question of {\itshape "how the model works"} and, the latter one try to address {\itshape "how much more model can tell about the predictions."} 
+%One important thing is also discussing the difference between {\itshape interpretability } and {\itshape explanations.} \citep{honegger2018shedding} provides this differentiation by stating that explanations established interpretability of a model by answering {\itshape "why question" } behind the predictions.
+%
 %Moreover, interpretable machine learning models are which can provide human-understandable explanations for predictions, thus can be called as {\itshape interpretable } models in contrast to {\itshape black box} models. \newline
-%For many years, researchers have been actively working and proposing various methods to make {\itshape black box } models interpretable \cite{guidotti2018survey}. They further organize these methods into two classes: (1) Model Dependent Explanation Methods, which make black box model interpretable but tightly coupled with specific model architecture (2) Model Agnostic Explanation Methods; these methods are generalizable, thus, applicable to multiple black box models which deal with tabular, images, textual data. \newline
-%Local Interpretable Model-Agnostic Explanations (LIME) \cite{ribeiro2016should} and Shapely Additive Explanations (SHAP) \cite{lundberg2017unified} are few of the most prominent agnostic models identified in the literature \cite{guidotti2018survey,honegger2018shedding}, mainly provides the framework for local model interpretability, that is, producing a human-understandable explanation for a particular prediction. These explanation methods can open complex models such as DNN and work with several kinds of datasets.\newline IMPROVEMENT REQUIRED ]
+%For many years, researchers have been actively working and proposing various methods to make {\itshape black box } models interpretable \citep{guidotti2018survey}. They further organize these methods into two classes: 1) Model Dependent Explanation Methods, which make black box model interpretable but tightly coupled with specific model architecture 2) Model Agnostic Explanation Methods; these methods are generalizable, thus, applicable to multiple black box models which deal with tabular, images, textual data.
+%
+%Local Interpretable Model-Agnostic Explanations (LIME) \citep{ribeiro2016should} and Shapely Additive Explanations (SHAP) \citep{lundberg2017unified} are few of the most prominent agnostic models identified in the literature \citep{guidotti2018survey,honegger2018shedding}, mainly provides the framework for local model interpretability, that is, producing a human-understandable explanation for a particular prediction. These explanation methods can open complex models such as DNN and work with several kinds of datasets.\newline IMPROVEMENT REQUIRED ]
 
 \subsection{Problem Statements} %\subsection{}
 %\textit{Sub-section Scope.}
@@ -243,7 +274,8 @@
 %	\item \textit{Explain why the above problem worth exploration and solution.}
 %	\item \textit{Define sub-problems}
 %\end{itemize}
-%The challenge is that machine learning models become complicated black boxes when applied on a large scale to solve business problems. Such models are not explainable to end consumers, which raises trust, transparency and privacy concerns. Interpretability and explainability try to solve this challenge; researchers have developed explanation methods which approximate the inner working of the black box model by taking model and testing instances as an input. However, a new challenge has appeared to evaluate explanations produced by explanation methods. In this research, we present a new statistical approach based on similarity measures to evaluate explanations. We tested our framework mainly on classification (binary, multiple, multi-class) problems, including numerical, categorical and textual datasets (iris, titanic, 20-newsgroup).
+The challenge is that machine learning models become complicated black boxes when applied on a large scale to solve business problems. Such models are not explainable to end consumers, which raises trust, transparency and privacy concerns. Interpretability and explainability try to solve this challenge; researchers have developed explanation methods which approximate the inner working of the black box model by taking model and testing instances as an input. However, a new challenge has appeared to evaluate explanations produced by explanation methods. In this research, we present a new statistical approach based on similarity measures to evaluate explanations. We tested our framework mainly on classification (binary, multiple, multi-class) problems, including numerical, categorical and textual datasets (iris, titanic, 20-newsgroup).
+
 \subsubsection{Research Questions} %\subsubsection{}
 %\textit{Sub-sub-section Scope.}
 %\begin{itemize}
@@ -278,6 +310,7 @@
 		\end{enumerate}
 	\end{enumerate}
 \end{enumerate}
+
 \subsubsection{Research Methodology} %\subsection{}
 %\textit{Sub-sub-section Scope.}
 %\begin{itemize}
@@ -288,9 +321,11 @@
 %\end{itemize}
 
 \subsection{Thesis Outline} %\subsection{}
-%The thesis outline is as Section (2) gives an overview on specific properties of explanations, types of explanation methods and existing work on evaluating explanations. Section (3) describes the intuition behind explanation methods chosen for this research and defines our new approach to evaluate explanations. Section (4) defines our experimental setup and shows our experiments and results. Section (5) tests our framework scalability, complexity by defining another experimental setup and running experiments on multi-class textual classification problem. In the end Section (6) concludes our results, discusses limitations and future work.
+The thesis outline is as; Section~\ref{sec:interpretability_in_ML} gives an overview on specific properties of explanations, types of explanation methods and existing work on evaluating explanations. Section~\ref{sec:methodologies}  explains the explanation methods chosen for this research and defines the approach to evaluate the explanations generated by interpretable methods. Section~\ref{sec:experiments} defines our experimental setup and shows our experiments and results. An the end, Section~\ref{sec:conclusion} concludes the results, discusses limitations and future work.
 
-\section{Interpretability in Machine Learning} %\section{Two}
+%Section (5) tests our framework scalability, complexity by defining another experimental setup and running experiments on multi-class textual classification problem.
+
+\section{Interpretability in Machine Learning}\label{sec:interpretability_in_ML} %\section{Two} 
 %\textit{Section Scope.}
 %\begin{itemize}
 %	\item \textit{Explain about interpretability in machine learning.}
@@ -364,8 +399,7 @@
 %	\item \textit{- Add Table to show the survey (RQ2 Review Literature)}
 %\end{itemize}
 
-
-\section{Methodologies} %\section{Three}
+\section{Methodologies}\label{sec:methodologies} %\section{Three}
 %\textit{Section Scope.}
 %\begin{itemize}
 %	\item \textit{Communicate about primary methodologies which are selected}
@@ -376,7 +410,7 @@ On a high-level, the steps work as follow. 1) Predictive models are trained to p
 
 Let $f_c: X \mapsto y$ as a black-box classifier who classifies $x \in X; X = {\mathbb{R}}^d$ to class $y, y \in \{c_1, \dots, c_n\}$. Now, let $z \in X$ be an instance from input space which requires an explanation for a prediction $f_c(z) = c_z$. An explanation model $f_e(z)$ outputs an explanation feature vector $ e = {\mathbb{R}}^d$ for which the estimation of robustness or stability is required. The main objective of this section is to define the notion of stability using local Lipschitz esitmation which requires a neighborhood $N_{\epsilon}(z)$ around an instance $z \in X$. Verbally, the notion of stability is the estimation of \textit{"how similar are the explanations for similar instances"} and vice versa indicates the notion of unstabiliy.
 
-An overview of predictive models and explanation methods is presented in Section 3.1 and Section 3.2, respectively. Section~\ref{sec:defining_similarity} defines similarity measure and Section~\ref{sec:defining_explanation_evaluation_framework} formalize the robustness measure and presents algorithms used in the implementation.
+An detailed explanation for each explanation methods (used in this work) is presented in Section~\ref{sec:LIME} and Section~\ref{sec:SHAP}, respectively. Section~\ref{sec:defining_similarity} defines similarity measure and Section~\ref{sec:defining_explanation_evaluation_framework} formalizes the explanation evaluaton framework which defines the robustness measures and presents the algorithmic design used in the implementation.
 
 %\subsection{Predictive Models}%\subsection{}
 %%\textit{Sub-section Scope.}
@@ -398,54 +432,33 @@ An overview of predictive models and explanation methods is presented in Section
 %%	\item \textit{Explain how it works, learn and predict}
 %%\end{itemize}
 
-\subsection{Model-Dependent Explanation Methods}%\subsection{}
-\subsection{Model-Agnostic Explanation Methods} %\subsection{}
+%\subsection{Model-Dependent Explanation Methods} %\subsection{}
+%\subsection{Model-Agnostic Explanation Methods}  %\subsection{}
 %\textit{Sub-section Scope.}
 %\begin{itemize}
 %	\item \textit{Explain about selected explanation methods}
 %\end{itemize}
 
-%The machine learning is a core element in the advancement of science and technology. However, in comparison to the technological progress in the field, the social aspects and trust concerns are neglected. Today, industrial digitalisation is impacting humans directly, and a wide range of machine learning models often deployed in products and services contribute to it. The main concern remains the same as  "if the users can trust the predictions and models". It is useful to highlight two aspects of trust here 1) \textit{"trust in the prediction"} that whether users can trust the prediction and decide based on it. 2) \textit{"trust in the model"} that whether users can trust and understand the overall behaviour of the model, not assuming it as some black-box.
+%\subsubsection{Local Surrogate (LIME)} %\subsubsection{}
+\subsection{ LIME (Local Interpretable Model-agnostic Explanations)}\label{sec:LIME} %\subsection{}
+LIME (Local Interpretable Model-agnostic Explanations) is an explanation method which approximates the explanations for individual predictions of any classifier or regressor \citep{ribeiro2016should}. The motivation behind LIME is simple; imagine there is a black box model which is trained on some data and gives predictions for new data points. LIME tries to explain a specific prediction of the black-box model by fitting the interpretable model locally. It trains the local interpretable model in a selected local vicinity around a point of interest. A new training dataset which contains permuted samples and corresponding predictions by the black-box model is used to train and evaluate the local interpretable model. 
 
-\subsubsection{Local Surrogate (LIME)} %\subsubsection{}
-%\textit{Sub-section Scope.}
-%\begin{itemize}
-%	\item \textit{Explain what is Local Surrogate and LIME}
-%	\item \textit{Explain how it works and interpret black box models}
-%	\item \textit{Communicate the pros and cons of LIME.}
-%	\item \textit{- Add figure for an explanation}
-%\end{itemize}
-
-%The machine learning is a core element in the advancement of science and technology. However, in comparison to the technological progress in the field, the social aspects and trust concerns are neglected. Today, industrial digitalisation is impacting humans directly, and a wide range of machine learning models often deployed in products and services contribute to it. The main concern remains the same as  "if the users can trust the predictions and models". It is useful to highlight two aspects of trust here 1) \textit{"trust in the prediction"} that whether users can trust the prediction and decide based on it. 2) \textit{"trust in the model"} that whether users can trust and understand the overall behaviour of the model, not assuming it as some black-box.
-%
-%In addition to trust concerns, it is worthwhile to measure the model's behaviour before deploying it in the wild. Often, the accuracy metric is used to evaluate the model on unseen data, but it may not indicates the product's goal every time. Inspecting multiple instances from large datasets and their explanations can aid to reduce the blind faith on accuracy measure. Local Interpretable Model-agnostic Explanations (LIME) provides an individual explanation as a solution to \textit{"trust in the prediction"} and giving multiple such explanations as an approximate answer to \textit{"trust in the model"} problem.
-
-
-Local Interpretable Model-agnostic Explanations (LIME) \citep{ribeiro2016should} is an explanation method which approximates the explanations for individual predictions of any classifier or regressor. The motivation behind LIME is simple; imagine there is a black box model which is trained on some data and gives predictions for new data points. LIME tries to explain a specific prediction of the black-box model by fitting the interpretable model locally. It trains the local interpretable model in a selected local vicinity around a point of interest. A new training dataset which contains permuted samples and corresponding predictions by the black-box model is used to train and evaluate the local interpretable model. 
-
+\subsubsection{LIME explanation mechanism} %\subsubsection{}
 The generated explanations can be textual or visual artefacts that show the relationship between an instance's features and the model's prediction. A critical argument here is what if an explanation is not intelligible, therefore it is essential to make it faithful and understandable. Figure~\ref{fig:ribeiro2016_lime_figure1} is illustrating the case where a doctor can utilise the model explanation to make a decision. Here, an explanation is a small set of symptoms with some weights associated with them; green indicates positive contribution where red shows that the symptom is contributing negatively. It helps in the decision-making where a domain expert can accept or reject the explanation based on his prior knowledge.
 
 \begin{figure}[H]
 	\includegraphics[width=1.0\linewidth]{ribeiro2016_lime_figure1}
 	\vspace*{-10mm}
-	\caption{LIME: \citep{ribeiro2016should}: }
+	\caption{LIME: \citep{ribeiro2016should}: Depicts that an explanation behind the model prediction can help a doctor to make an informed decision. LIME presents the symptoms which led the model to predict that a patient has flu. As portrayed using a patient's history "sneeze" and "headache" contributed positively, while "no fatigue" is against the "flu" prediction. }
 	\label{fig:ribeiro2016_lime_figure1}
 \end{figure}
-
-%Important Points
-%Explaining several representative instances.
-%Selecting the trustworthy model using explanations
-
-%Outline evaluation characteristics
-%	Interpretability of explanations -- understanable
-%	Local fidelity -- faithfulness
-%	Global perspective -- selecting few explanations as representative of model
 
 LIME \citep{ribeiro2016should} explainer focuses on mainly two essential criteria while generating explanations. The first one is that any explanation should be \textbf{interpretable}, i.e., the relationship between input variables and the output prediction should be easily understandable by users. Here, defining what is interpretable varies based on the target audience, e.g., users can be layman or machine learning experts. However, the bottom line is, an explanation should be simple enough to comprehend. Regardless of the hundreds or thousands of input variables used in the black-box model, there should be a mechanism to control the complexity of explanation.
 
 The second one is a \textbf{local fidelity} which means that local interpretable model should be faithful in the locality around a point of prediction being explained. Though local faithfulness may not show features which are important at the global level, several explanations can be shown to give a global perspective. It is due to that LIME does not generate the faithful global explanation, which remains a complex problem to solve. Now keeping these two criteria LIME \citep{ribeiro2016should} provides a mechanism to produce an explanation which is interpretable and locally faithful using interpretable model.
 
-Let $g \in G$ is an explanation model where $G$ is a class of \textit{interpretable models} such as linear models or decision trees. As explanation should be simple enough to understand so the domain of  $g$ is $\{0, 1\}^{d'}$, which indicates the absence/presence of the component in its interpretable representation. Note the original representation of an instance being explained is $x \in \mathbb{R}^d$ but to make an explanation interpretable, a binary vector representation $x' \in \{0, 1\}^{d'}$ is used as an interpretable representation. Moreover, $\upOmega(g)$ is used as a measure to control the complexity to ensure the \textit{interpretability} of an explanation model $g \in G$. For instance, in the case of linear models, the complexity factor can be the number of non-zero weights, whereas, it may be the depth of the tree for decision trees.
+\subsubsection{LIME explanation framework} %\subsubsection{}
+Let $g \in G$ is an explanation model where $G$ is a class of \textit{interpretable models} such as linear models or decision trees. As explanation should be simple enough to understand so the domain of  $g$ is $\{0, 1\}^{d^\prime}$, which indicates the absence/presence of the component in its interpretable representation. Note that the original representation of an instance being explained is $x \in \mathbb{R}^d$ but to make an explanation interpretable, a binary vector representation $x^\prime \in \{0, 1\}^{d^\prime}$ is used as an interpretable representation. Moreover, $\upOmega(g)$ is used as a measure to control the complexity to ensure the \textit{interpretability} of an explanation model $g \in G$. For instance, in the case of linear models, the complexity factor can be the number of non-zero weights, whereas, it may be the depth of the tree for decision trees.
 
 Now, let $f: \mathbb{R}^d \mapsto \mathbb{R}$ denotes a model being explained and $f(x)$ is a probability funtion which tells that $x$ belongs to certain class. To explain the prediction locally, $\pi_x(z)$ is used as a proximity measure between an instance $z$ to $x$ to define locality around $x$. In the original work \citep{ribeiro2016should} $\pi_x(z)$ is set to a exponential kernel $\exp{-D(x,z)^2/\sigma^2}$ defined on some distance measure $D$ with width $\sigma$.
 Finally, the explanation can be produced using \eqref{eq:lime_generate_explanaton} where $\mathcal{L}(f, g, \pi_x)$ is a measure which tells that how unfaithful $g$ is in approximating $f$ in the locality defined by $\pi_x$. The goal is to minmize the $\mathcal{L}(f, g, \pi_x)$ and keeping $\upOmega(g)$ small enough to produce understandable explanation.
@@ -454,27 +467,39 @@ Finally, the explanation can be produced using \eqref{eq:lime_generate_explanato
 \mathsf{\upxi}(x) = \argmin_{g \in G} \mathcal{L}(f, g, \pi_x) + \upOmega(g)
 \end{equation}
 
-\begin{wrapfigure}{r}{0.5\textwidth}
+Since LIME \citep{ribeiro2016should} only implements a class of linear models $G$ as interpretable models $g(z^\prime)=w_g.z^\prime$, so \eqref{eq:lime_measure_unfaithfulness} shows the quantity to be minimised. Let $\mathcal{Z}$ be a dataset used to build linear model which contains sample instances $z^\prime \in \{0, 1\}^{d^\prime}$ drawn uniformly at random from nonzero elements of $x^\prime$, weighted by $\pi_x$. The labels to these sample instances are assigned by using $f(z)$, it requires first recovering $z \in \mathbb{R}^d$ to original representation from interpretable representation  $z^\prime \in \{0, 1\}^{d^\prime}$. 
+
+\begin{equation}\label{eq:lime_measure_unfaithfulness}
+\mathcal{L}(f, g, \pi_x) = \sum_{z, z^\prime \in Z} \pi_x(z)\onespace(f(z) - g(z^\prime))^2
+\end{equation}
+
+\begin{wrapfigure}{r}{0.6\textwidth}
 	\centering
-	\vspace*{-2mm}
+	\vspace*{-5mm}
 	\includegraphics[width=1.0\linewidth]{ribeiro2016_lime_figure2}
 	\vspace*{-10mm}
-	\caption{LIME: \citep{ribeiro2016should}: }
+	\caption{Intuitive example to present an idea for LIME  \citep{ribeiro2016should}. A complex decision function f is represented as pink/blue background, which is hard to approximate using a linear model. The instance being explained is the bold red cross, surrounded by sampled instances (portrayed here by size). A function f gets predictions for all sample instances and weighs them by the proximity to the instance of interest. A dashed line is a linear model, provides a locally faithful explanation. }
 	\label{fig:ribeiro2016_lime_figure2}
 \end{wrapfigure}
 
-Now, let $f: \mathbb{R}^d \mapsto \mathbb{R}$ denotes a model being explained and $f(x)$ is a probability funtion which tells that $x$ belongs to certain class. To explain the prediction locally, $\pi_x(z)$ is used as a proximity measure between an instance $z$ to $x$ to define locality around $x$. In the original work \citep{ribeiro2016should} $\pi_x(z)$ is set to a exponential kernel $\exp{-D(x,z)^2/\sigma^2}$ defined on some distance measure $D$ with width $\sigma$.
-Finally, the explanation is produced using \eqref{eq:lime_measure_unfaithfulness} where $\mathcal{L}(f, g, \pi_x)$ is used as a measure which tells that how unfaithful $g$ is in approximating $f$ in the locality defined by $\pi_x$. The goal is to minmize the $\mathcal{L}(f, g, \pi_x)$ and keeping $\upOmega(g)$ small enough to produce understandable explanation.
+%\begin{figure}[H]
+%	\centering
+%	\vspace*{-2mm}
+%	\includegraphics[width=1.0\linewidth]{ribeiro2016_lime_figure2}
+%	\vspace*{-10mm}
+%	\caption{Intuitive example to present an idea for LIME  \citep{ribeiro2016should}. A complex decision function f is represented as pink/blue background, which is hard to approximate using a linear model. The instance being explained is the bold red cross, surrounded by sampled instances (portrayed here by size). A function f gets predictions for all sample instances and weighs them by the proximity to the instance of interest. A dashed line is a linear model, provides a locally faithful explanation. }
+%	\label{fig:ribeiro2016_lime_figure2}
+%\end{figure}
 
-\begin{equation}\label{eq:lime_measure_unfaithfulness}
-\mathcal{L}(f, g, \pi_x) = \sum_{z, z{'} \in Z} \pi_x(z)\onespace(f(z) - g(z'))^2
-\end{equation}
+Figure \ref{fig:ribeiro2016_lime_figure2} shows intuition that how LIME \citep{ribeiro2016should} optimize the \eqref{eq:lime_generate_explanaton}. It depicts that instances are sampled in the vicinity of $x$ (bold red cross), the instances which are near to $x$ have more weights as compared to the ones which far from $x$. Given this locality, a linear interpretable model provides a locally faithful explanation. Though it may not explain the complex black-box model globally, it captures explanation fairly well within the vicinity of the point of interest $x$. 
+%\newline
 
+%\subsubsection{Shortcomings of LIME} %\subsubsection{}
 
 %G$ class of interpretable models. \newline
-%$g \mapsto \{0, 1\}^{d'}$ \newline
+%$g \mapsto \{0, 1\}^{d^\prime}$ \newline
 %$\mathbb{R}^d$ is a original representation. \newline
-%$\{0, 1\}^{d'}$ is a binary vector for interpretable representation. \newline
+%$\{0, 1\}^{d^\prime}$ is a binary vector for interpretable representation. \newline
 %$\upOmega(g)$ measure complexity of explanation (as opposed to interpretability). \newline
 
 %$f: \mathbb{R}^d \mapsto \mathbb{R}$ denotes model being explained. \newline
@@ -483,30 +508,85 @@ Finally, the explanation is produced using \eqref{eq:lime_measure_unfaithfulness
 %$\pi_x(z)$ = $\exp{-D(x,z)^2/\sigma^2}$ \newline
 %$\mathcal{L}(f, g, \pi_x)$ be a measure that how unfaithful $g$ is in approximating $f$ in the locality defined by $\pi_x$. \newline
 
+%\subsubsection{Shapley Values (SHAP)} %\subsubsection{}
+\subsection{SHAP (SHapley Additive exPlanation)}\label{sec:SHAP} %\subsection{}
+%It works based on SHapley values (Wikipedia) -- a method in the cooperative game theory which tells how much each player has contributed in the total payout. On the high-level, SHAP treats each feature value as a player and total "payout" as an actual prediction of an instance minus the average prediction for all instances. In order to build the explanation for the framework, it is necessary first to present a brief overview of SHapley values. 
+
+In contrast to LIME (Section~\ref{sec:LIME}), SHAP (SHapley Additive exPlanation) is a unified framework to interpret and explain individual predictions \citep{lundberg2017unified}. It works on the concepts of SHapley value \citep{shapley1953value} -- a method in the cooperative game theory. In order to build the explanation for the framework, it is necessary first to present a brief overview of SHapley values. 
+
+\subsubsection{Overivew of SHapley value} %\subsubsection{}
+SHapley value -- is a solution concept in cooperative game theory that answers how much each player contributes in a coalition and receives some payout based on the contribution \citep{shapley1953value}. The core purpose of SHapley value is to find which player is important in the cooperative game environment. Taking the idea into machine learning and interpretability context, the goal is is to find which feature value plays the most in a specific prediction. Here prediction task becomes a game; feature values are players and feature contributions are payouts.
+
+Assume a task of predicting the price of an apartment; one specific example could be feature values as park-nearby, cat-banned, area-50 and floor-2nd, which predicts the price of \$300k for an apartment. Now, suppose the average prediction of all the instances is \$310k, which lead to the difference of \$10k price between actual prediction and average prediction. SHapley value tries to explain the difference value \$10k  and how each feature value contributed to it. In our case, it repeats all the combinations of features values and predicts the price of an apartment and then get the average prediction price. The computational cost increases exponentially with the number of feature values. One way to minimise the computational cost is to use fewer samples to calculate the contribution in all possible combinations.
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\centering
+	\vspace*{-2mm}
+	\includegraphics[width=1.0\linewidth]{lundberg2017_shap_figure1}
+	\vspace*{-10mm}
+	\caption{SHapley value: \citep{molnarinterpretable}: All 8 combinations require to compute the Shapley value for feature value = "cat-banned".}
+	\label{fig:lundberg2017_shap_figure1}
+\end{wrapfigure}
+
+%\begin{figure}[H]
+%	\centering
+%	\vspace*{-2mm}
+%	\includegraphics[width=1.0\linewidth]{lundberg2017_shap_figure1}
+%	\vspace*{-10mm}
+%	\caption{SHapley value: \citep{molnarinterpretable}: All 8 combinations require to compute the Shapley value for feature value = "cat-banned".}
+%	\label{fig:lundberg2017_shap_figure1}
+%\end{figure}
+
+Figure~\ref{fig:lundberg2017_shap_figure1} intuitively elaborates the ideas of calculating the feature contributions. It shows all the possible combinations which are required to calculate the average marginal contribution for feature value "cat-banned". Each of the combinations predicts the price with or without "cat-banned" value. Then the difference between predicted prices gives the marginal contribution for feature value "cat-banned".  Averaging the marginal contribution would give the Shapley value for feature value "cat-banned".  Similarly, Shapley values for all other feature values can be estimated to get the complete distribution of the prediction (minus the average) among the feature values.
 
 
+\subsubsection{SHAP explanation framework} %\subsubsection{}
+Keeping the concepts of SHapley value \citep{shapley1953value}, SHAP \citep{lundberg2017unified} introduced a new class of additive feature attribution methods (Definition~\ref{def:SHAP_additive_class}), which unifies six different explanation methods. By innovatively applying game theory concept, SHAP guarantees that there is a unique solution to a new class which helps to measure the unified SHAP values, approximated by various methods. SHAP represents an additive feature attribution method, as a linear model \eqref{eq:SHAP_additive_class}, which enables the connectivity of various explanation models, including LIME \citep{ribeiro2016should} within the SHAP framework.
 
+\begin{definition}\label{def:SHAP_additive_class}{\textbf{Additive feature attribution methods} \textit{have an explanation model that is a linear
+function of binary variables:}}
+\end{definition}
 
+\begin{equation}\label{eq:SHAP_additive_class}
+	g(z^\prime) =  \phi_0 + \sum_{i=1}^{m} \phi_i z_i^\prime 
+\end{equation}
+where $g$ is an explanation model, $z^\prime \in \{0,1\}^{M}$ is a simplied feature vector where 0 indicates the absence of feature value and 1 indicates the presence. $M$ is the number of simplified input features and $\phi_i \in \mathbb{R}$ is the feature attribution for a feature i, the Shapley values. SHAP proposed a way to transform the underlying interpretable models into ~\eqref{eq:SHAP_additive_class} and then unifies explanation method who satisfies three desirable properties (given below) of Shapley values \citep{molnarinterpretable}.
 
+The first desireable property is \textit{local accuracy}, it measures that how well an explanation method is approximating the output of function $f$ for a simplified input $x^\prime$. $x^\prime$ corresponds to a orignal instance being explained $x$ and $f$ is a black-box model which predicts an output for $x$.
 
+\begin{properties} \label{prop:all_properties}
+\item Local Accuracy:
+\begin{align*}
+	f(x) = g(x^\prime) =  \phi_0 + \sum_{i=1}^{m} \phi_i x_i^\prime 
+\end{align*}
+Here, an explanation model $g(x^\prime)$ matches the original model $f(x)$ when $x = h_x(x^\prime)$.
+%%If you define $\phi_0 =  E_X(\hat{f}(X))$ and set all $x_i^\prime$ to 1, this is the Shapley efficiency property. Only with a different name and using the coalition vector.
+%\begin{align*}
+%	f(x) =  \phi_0 + \sum_{i=1}^{m} \phi_i x_i^\prime = E_X(\hat{f}(X)) + \sum_{i=1}^{m} \phi_i
+%\end{align*}
+The second desireable property is \textit{missingness}. It applies the constraints to features that when $x^\prime = 0$ then it should have no attributed impact.
+\item Missingness
+\begin{align*}
+	x_i^\prime = 0 \implies \phi_i = 0
+\end{align*}
+%Missingness says that a missing feature gets an attribution of zero.
+The third property is \textit{consistency}. It states that if some changes in a model increase the input's contribution or even the contribution stays the same regardless of the other inputs, it should not decrease the input's attribution. In the context of a Shapley value, it means that if a model changes increase the marginal contribution of a feature value, or even the marginal contribution remains the same (regardless of the other features), then the Shapley value of the feature should not decrease, infact it should also increase or atleast stays the same.
 
-
-
-\subsubsection{Shapley Values (SHAP)} %\subsubsection{}
-%\textit{Sub-section Scope.}
-%\begin{itemize}
-%	\item \textit{Explain what is Shapley Values and SHAP}
-%	\item \textit{Explain how it works and interpret black box models}
-%	\item \textit{Communicate the pros and cons of LIME.}
-%	\item \textit{- Add figure for an explanation}
-%\end{itemize}
+\item Consistency
+Let $f_x(z_i^\prime) = f(h_x(z_i^\prime))$, and $z^\prime_{\setminus i}$ indicates that $z^\prime_i = 0$. For any two models $f$ and $f^\prime$ that satisfy:
+\begin{align*}
+	f_x(z_i^\prime) - f^\prime_x(z^\prime_{\setminus i}) \geq f_x(z_i^\prime) - f^\prime_x(z^\prime_{\setminus i})
+\end{align*}
+for all inputs $z^\prime \in \{0,1\}^{M}$, then $\phi_i(f^\prime, x) \geq \phi_i(f, x)$
+\end{properties}
 
 \subsection{Defining Similarity}\label{sec:defining_similarity} %\subsubsection{}
-To formulate the explanation evaluation framework the pre-requistie is to specify a similarity measure. One trivial way is using euclidean distance which is an ordinary straight line distance between two points in euclidean space (wikipedia). For instance, in euclidean n-space the distance between two points $x = \{x_1, x_2, ..., x_n\}$ and $y = \{y_1, y_2, ..., y_n\}$ is:
+Now moving forward, the next step is to specify a similarity measure. It is necessary to establish the explanation evaluation framework which can measure the explanations generated by LIME (Section~\ref{sec:LIME}) and SHAP (Section~\ref{sec:SHAP}). One trivial way is using euclidean distance which is an ordinary straight line distance between two points in euclidean space. For instance, in euclidean n-space the distance between two points $x = \{x_1, x_2, ..., x_n\}$ and $y = \{y_1, y_2, ..., y_n\}$ is:
 
 \begin{equation}\label{eq:euclidean_distance}
 d(x,y) = d(y,x) = \sqrt{\sum_{i=1}^{n}(x_i - y_i)^2}
 \end{equation}
+
 Using Euclidean distance choice, it is straightforward to define a small neighbourhood around any instance. However, estimating neighbourhood is challenging task itself, but euclidean distance allows us to find similar points trivially. The Definition~\ref{def:1} and Definition~\ref{def:2} formalize the notion of defining a ball of radius $r$ centered at instance $a$ as a neighbourhood policy. The subtle difference between the definitions is that closed balls contain all "exterior" points as compared to open balls.
 
 \begin{definition}\label{def:1}{Let $a \in {\mathbb{R}}^n$: Then the \textbf{Open Ball centered at $a$ with Radius $r > 0$} denoted $B_{r}(a)$ is defined to be a set of all points $x \in {\mathbb{R}}^n$ such that $||x-a|| < r$, that is, $\{x \in {\mathbb{R}}^n |\;||x - a|| < r\}.$}
@@ -533,20 +613,30 @@ N_{\epsilon}(x_i) = \{x_j \in X| \onespace d(x_i, x_j) \leq \epsilon\}
 Here, $N_{\epsilon}(x_{i})$ is ball of radius $\epsilon$ centered at any point of interest $x_i$. It is noticeable that we used a closed ball Definiton~\ref{def:2} because \citep{alvarez2018robustness} used the same form in the original work.
 
 \subsection{Defining Explanation Evaluation Framework}\label{sec:defining_explanation_evaluation_framework} %\subsection{}
-The section attempts to define a robustness measure which seeks a variability in the explanations generated by interpretable methods for similar inputs. Intuitively, the idea is if a variation in inputs is subtle enough that it does not change the model's predictions, then it should not change explanations either. \citet{alvarez2018robustness} proposes a notion of robustness measure which forms the basis of this work.
+
+Now, let us define the robustness or evaluation measures using the above explanations (related to explanation methods and similarity measure). Intuitively, the idea is to have the measures which seek a variability in the explanations generated by interpretable methods for similar inputs. If a variation in inputs is subtle enough that it does not change the model's predictions, then it should not change explanations either. \citet{alvarez2018robustness} proposes a notion of robustness measure which forms the basis of this work.
 
 The critical argument was that the understanding of a complex model using a single point-wise explanations might lead to a false understanding. One way to address this would be looking beyond the point of interest and covering its neighbourhood to examine the behaviour of a model. Therefore a crucial property such as \textit{robustness} is required to measure the explanations generated by the interpretability methods. It ensures that an explanation of a point is roughly constant in its vicinity regardless of the models (linear, tree-based).  In a simple form, it means that explanations for similar instances should not widely differentiate.
 
 \begin{wrapfigure}{r}{0.5\textwidth}
 	\centering
-	\vspace*{-2mm}
+	\vspace*{-5mm}
 	\includegraphics[width=1.0\linewidth]{alvarez2018_robustness_figure1}
-	\vspace*{-10mm}
+	\vspace*{-11mm}
 	\caption{LIME and SHAP explanations for binary classifiers \citep{alvarez2018robustness}: The heatmaps show models’ positive-class probabilities and bar charts represent explanations (attribution values where x in green and y in purple) for predictions. It is visible that both LIME and SHAP explanations are stable for linear SVM model (top) but significantly vary for a non-linear two-layer neural network (bottom).}
 	\label{fig:alvarez2018_robustness_figure1}
 \end{wrapfigure}
 
-Figure~\ref{fig:alvarez2018_robustness_figure1} presented in original work \citep{alvarez2018robustness} shows the explanations generated by LIME \cite{ribeiro2016should} and SHAP \cite{lundberg2017unified} for binary classifier predictions trained on a two-dimensional dataset. It explained that the explanations for a complex neural network model (bottom row) are often inconsistent and vary noticeably for neighbouring points. On the other side, explanations for linear SVM's predictions (top row) are relatively stable. This instability motivated the investigation of such a phenomenon and a need for an objective tool to quantify stability.
+%\begin{figure}[]H]
+%	\centering
+%	\vspace*{-2mm}
+%	\includegraphics[width=1.0\linewidth]{alvarez2018_robustness_figure1}
+%	\vspace*{-10mm}
+%	\caption{LIME and SHAP explanations for binary classifiers \citep{alvarez2018robustness}: The heatmaps show models’ positive-class probabilities and bar charts represent explanations (attribution values where x in green and y in purple) for predictions. It is visible that both LIME and SHAP explanations are stable for linear SVM model (top) but significantly vary for a non-linear two-layer neural network (bottom).}
+%	\label{fig:alvarez2018_robustness_figure1}
+%\end{figure}
+
+Figure~\ref{fig:alvarez2018_robustness_figure1} presented in original work \citep{alvarez2018robustness} shows the explanations generated by LIME \citep{ribeiro2016should} and SHAP \citep{lundberg2017unified} for binary classifier predictions trained on a two-dimensional dataset. It explained that the explanations for a complex neural network model (bottom row) are often inconsistent and vary noticeably for neighbouring points. On the other side, explanations for linear SVM's predictions (top row) are relatively stable. This instability motivated the investigation of such a phenomenon and a need for an objective tool to quantify stability.
 
 In light of this, Lipschitz continuity as function stability has been suggested to measure the relative change in output concerning the inputs. It measures the substantial relative deviations (global) throughout the input space. Since in the context of interpretable methods, explanations do not require uniformity for very distant inputs. Therefore, a local notion of stability (Definition~\ref{def:3}) has been proposed in the form of local Lipschitz continuity (Hein and Andriushchenko, 2017; Weng et al., 2018), which measure the relative deviations in a small neighbourhood input space.
 \begin{definition}\label{def:3}{\textit{local notion of stability}:}
@@ -588,7 +678,7 @@ Moving towards algorithmic functionality, Algorithm~\ref{algo:lipscitz_estimatio
 To be more elaborative, Line~\ref{algo:line:lipscitz_estimation_neighbourhood}
 takes 1)  point of interest $x_i$, which requires a local Lipschitz estimation. 2) all the test-set points $ \in X$. 3) the value $\epsilon$ to define the radius. Given the inputs, it calculates the Euclidean distances from point $x_i$ to all points in $X$. If the distance is less than or equal to $\epsilon$ then the point $x_j \in X$ then a point $x_j$ is considered to be in a neighbourhood $N_{\epsilon}(x_i)$. Once the neighrbouring points are found for any point $x_i$, a local Lipschitz estimation value can be calculated (Line~\ref{algo:line:lipscitz_estimation_calculation}) and after the calculation a value is returned.
 
-\subsubsection{Lipschitz Estimation as a Robustness Measure}\label{sec:lipschitz_estimation_as_a_robustness_measure} %% \subsubsection
+\subsubsection{Lipschitz Estimation as a Stability Measure}\label{sec:lipschitz_estimation_as_a_stabilitys_measure} %% \subsubsection
 At the beginning, Section~\ref{sec:defining_explanation_evaluation_framework} mentioned that local Lipschitz estimation measure relative deviations inside the neighbourhood input space. To support the argument, Figure~\ref{fig:alvarez2018_robustness_figure2} from \citep{alvarez2018robustness} helps to demonstrate that how $L(x_i)$ computed by above mechanism describe the relative deviations. The idea is to find the worst-case deviation point $x_j$ which maximise the \eqref{eq:lipschitz_estimation} from point of interest $x_i$. For instance, in Figure~\ref{fig:alvarez2018_robustness_figure2} from \citep{alvarez2018robustness} the examples from the BOSTON dataset show that however, the point of interests are incredibly similar, but their explanations by each method for the model’s prediction vary considerably. It also depicts that maximizing \eqref{eq:lipschitz_estimation} for $x_i$ measures relative deviation and allows us to enforce the robustness mechanism on explanations methods.
 \begin{figure}[H]
 	\includegraphics[width=1.0\linewidth]{alvarez2018_robustness_figure2}
@@ -597,6 +687,13 @@ At the beginning, Section~\ref{sec:defining_explanation_evaluation_framework} me
 	\label{fig:alvarez2018_robustness_figure2}
 \end{figure}
 
+%\subsubsection{Lipschitz Estimation as a Separability Measure}\label{sec:lipschitz_estimation_as_a_separability_measure} %% \subsubsection
+%
+%\begin{equation}\label{eq:lipschitz_estimation_as_a_separability_measure}
+%L(x_i) = \min_{x_j \notin B_{\epsilon}(x_i)}  \frac{||f(x_i) - f(x_j)||_{2}}{||x_i - x_j||_{2}}
+%\end{equation}
+%
+%Where $B_{\epsilon}(x_{i})$ is a ball of radius $\epsilon$ centered at $x_i$. It is a similar term to the one defined in \eqref{eq:neighbourhood}. 
 
 %Quick comment on Alg. 1: it is not clear from the algorithm what is being computed there. Presumably for each $x_{i}$ in X you want to compute maximal |f(x)-f($x_{i}$)|/[x-$x_{i}$| where $x \in N(x_{i})?$ You could also explain what the numbers in Tab. 1 are. The level of detail here is such that I could replicate your experiment, if I had the data and if I wanted to. E.g., you need to be more explicit in the algorithm and also define what you mean by “aggregation” in Tab. 1.
 
@@ -639,7 +736,7 @@ At the beginning, Section~\ref{sec:defining_explanation_evaluation_framework} me
 %- Explaining the similarity measure used in definition \newline
 %Brief why certain measure is selected and its usefulness \newline
 
-\section{Experimentation and Results} %\section{Four}
+\section{Experimentation and Results}\label{sec:experiments} %\section{Four}
 %Open text to experimentation section \newline
 
 \subsection{Datasets}
@@ -788,15 +885,16 @@ At the beginning, Section~\ref{sec:defining_explanation_evaluation_framework} me
 %The idea of using Fidelity as evaluation property is discarded because SHAP uses Shapley values for generating explanations
 %The idea of using Consistency as evaluation property is also discarded because it over-complicate the process.
 
-\section{Discussions and Conclusion} %\Section{}
+\section{Discussions and Conclusion}\label{sec:conclusion} %\Section{}
 \subsection{Results Summary} %\subsection{}
 \subsection{Limitations} %\subsection{}
 \subsection{Future Work} %\subsection{}
 \subsection{Conclusion} %\subsection{}
 
-% \bibliographystyle{babplain-lf}
-% \bibliographystyle{abbrv} % numbers
 \bibliographystyle{apalike} % alphas
+%\bibliographystyle{babplain-lf}
+%\bibliographystyle{plain}
+%\bibliographystyle{abbrv} % numbers
 \bibliography{ref}
 
 % --- Appendices ---
