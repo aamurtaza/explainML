@@ -264,7 +264,7 @@ In such cases where a user needs to know the reason behind a specific decision. 
 %In explainable machine learning, explanations established interpretability and transparency of a model by answering {\itshape "why question" } behind the predictions \citep{honegger2018shedding}. \citet{honegger2018shedding} further categorizes interpretability into three types: global model interpretability, algorithm interpretability, and local model interpretability. On the other hand, \citet{lipton2016mythos} suggests establishing interpretability by breaking explanations into two pieces, transparency and post-hoc explanations. First covers {\itshape "how the model works?"} and, the latter {\itshape "how much more model can tell about the predictions?"}.
 %
 %These questions focus on finding possible ways to enhance user's trust in model and trust in predictions. Indeed, the answers to these questions vary and depend on the application domain. However, several explanation methods have been proposed which partially gives explanations for the model predictions. Though, due to a lack of consensus on {\itshape "what is a good explanation?"} solving these questions are challenging.
-
+%
 %[ IMPROVEMENT REQUIRED To provide solutions to open {\itshape Black Box} models, researchers have suggested multiple frameworks and terminologies \citep{guidotti2018survey}.  \citep{lipton2016mythos} also categories the solution into two primary ways "transparency" and "post-hoc" explanations, first one covers the question of {\itshape "how the model works"} and, the latter one try to address {\itshape "how much more model can tell about the predictions."} 
 %One important thing is also discussing the difference between {\itshape interpretability } and {\itshape explanations.} \citep{honegger2018shedding} provides this differentiation by stating that explanations established interpretability of a model by answering {\itshape "why question" } behind the predictions.
 %
@@ -339,12 +339,104 @@ In such cases where a user needs to know the reason behind a specific decision. 
 %	\item \textit{Explain high-level about its works and how it has been evolving in research and practice}
 %\end{itemize}
 
+This section presents the recent research which has contributed to defining the notion of interpretability in the context of machine learning. Interpretability plays a vital role in many aspects of machine learning, e.g., fairness, decision-making, model validation, model testing, and implementing data usage regulation \citep{guidotti2018survey, zhang2019machine}. In the recent past, it has received considerable attention, particularly for the topics related to bias and fairness in machine learning models \citep{cathy2017weapons, molnarinterpretable}.
+
+In general, interpretability means to present (information of some form) in understandable terms. It is a broad term that often depends on multiple factors such as a domain, audience and application; therefore, it is hard to define it \citep{ruping2006learning, kim2016examples, miller2018explanation, molnarinterpretable, murdoch2019interpretable}. Likewise, in the context of machine learning, interpretability lacks a mathematical definition though researchers have tried to define it in a non-mathematical way \citep{molnarinterpretable}. \citet{kim2016examples} defines it as \textit{“Interpretability is the degree to which a human can consistently predict the model’s result.”}  On the other side, \citet{miller2018explanation} defines it as \textit{“Interpretability is the degree to which a human can understand the cause of a decision.”} Moreover, \citet{murdoch2019interpretable} states that interpretability means to extract relevant knowledge of domain relationships contained in data while understanding the machine learning model behaviour. 
+
+All of the above definitions point to the need for understanding the machine learning model better. In light of this, researchers further divided the interpretability into sub-categories. \citet{lipton2016mythos} establishes the interpretability by dividing it into two categories: transparency and post-hoc explanations. The first covers \textit{“how the model works?”}, and the latter \textit{“how much more model can tell about the predictions?”}. On the other hand, \citet{molnarinterpretable} categorises the interpretability into three types: algorithm interpretability, global model interpretability, and local model interpretability. The algorithm interpretability precisely tackles the question of \textit{“how does the algorithm create the model?”}. Global interpretability gives an overall perspective for a model and undertakes that \textit{“how does the trained model make predictions?”}.  Local interpretability tries to explain the singular predictions, and mainly solves that \textit{“why did the model make a specific prediction?”}.
+
+Similarly, \citet{murdoch2019interpretable} groups the interpretable machine learning generally into two kinds: intrinsic interpretability and post-hoc interpretability. Intrinsic interpretability is for self-explanatory models which inherently owns the interpretable structures such as a decision tree, rule-based model, linear models. In contrast, the post-hoc interpretability requires developing a secondary model to provide explanations for an existing model. Moreover, \citet{murdoch2019interpretable} states that these two main categories incorporate further global and local interpretability. Global interpretability interprets the inner working of machine learning models and increases their transparency. In contrast,  local interpretability helps to reveal the causal relations between a specific instance and its corresponding model prediction.
+
+Now, an above overview helps us to move forward to the sub-sections. Section 2.1 presents a detailed explanation of interpretable models who innately have interpretable structures. Section 2.2 presents detailed descriptions on explanation methods which incorporates interpretable models to mimic the machine learning model behaviour. Section 2.3 presents the properties found in the literature for evaluating the generated explanations and explanation methods.
+
+%Lipton 1018 further differentiate two types of interpretability: global interpretability, and local interpretability. Global interpretability means that users can understand how the model works globally by inspecting the structures and parameters of a complex model. Global interpretability could illuminate the inner working mechanisms of machine learning models and thus can increase their transparency.  In contrast, local interpretability locally examines an individual prediction of a model, trying to figure out why the model makes the decision it makes. Local interpretability will help uncover the causal relations between a specific input and its corresponding model prediction. 
+%That two help users trust a model and trust a prediction, respectively.
+
+
+\subsection{Explanations in the context of Machine Learning} %\subsection{}
+In explainable machine learning, explanations established interpretability and transparency of a model by answering {\itshape "why question" } behind the predictions \citep{honegger2018shedding}. \citet{honegger2018shedding} further categorizes interpretability into three types: global model interpretability, algorithm interpretability, and local model interpretability. On the other hand, \citet{lipton2016mythos} suggests establishing interpretability by breaking explanations into two pieces, transparency and post-hoc explanations. First covers {\itshape "how the model works?"} and, the latter {\itshape "how much more model can tell about the predictions?"}.
+
+These questions focus on finding possible ways to enhance user's trust in model and trust in predictions. Indeed, the answers to these questions vary and depend on the application domain. However, several explanation methods have been proposed which partially gives explanations for the model predictions. Though, due to a lack of consensus on {\itshape "what is a good explanation?"} solving these questions are challenging.
+
+[ IMPROVEMENT REQUIRED To provide solutions to open {\itshape Black Box} models, researchers have suggested multiple frameworks and terminologies \citep{guidotti2018survey}.  \citep{lipton2016mythos} also categories the solution into two primary ways "transparency" and "post-hoc" explanations, first one covers the question of {\itshape "how the model works"} and, the latter one try to address {\itshape "how much more model can tell about the predictions."} 
+One important thing is also discussing the difference between {\itshape interpretability } and {\itshape explanations.} \citep{honegger2018shedding} provides this differentiation by stating that explanations established interpretability of a model by answering {\itshape "why question" } behind the predictions.
+
+Moreover, interpretable machine learning models are which can provide human-understandable explanations for predictions, thus can be called as {\itshape interpretable } models in contrast to {\itshape black box} models. \newline
+For many years, researchers have been actively working and proposing various methods to make {\itshape black box } models interpretable \citep{guidotti2018survey}. They further organize these methods into two classes: 1) Model Dependent Explanation Methods, which make black box model interpretable but tightly coupled with specific model architecture 2) Model Agnostic Explanation Methods; these methods are generalizable, thus, applicable to multiple black box models which deal with tabular, images, textual data.
+
+Local Interpretable Model-Agnostic Explanations (LIME) \citep{ribeiro2016should} and Shapely Additive Explanations (SHAP) \citep{lundberg2017unified} are few of the most prominent agnostic models identified in the literature \citep{guidotti2018survey,honegger2018shedding}, mainly provides the framework for local model interpretability, that is, producing a human-understandable explanation for a particular prediction. These explanation methods can open complex models such as DNN and work with several kinds of datasets.\newline IMPROVEMENT REQUIRED ]
+
+%- In machine learning it generally conveys that to present the end-users with understandable explanations regarding model working and predictions. 
+%
+%- Growing concerns of social, ethical, machine learning debugging and testing in machine learing raised the need of interpretablilty.
+
+%- There are multiple ways of achieving the intpertablilty
+%- Intrinsic interpretable models
+%- Global explantion
+%	Model-agnostic
+%	Model-specific
+%	DNN
+%- Local explanation
+%	Model-agnostic
+%	Model-specific
+%	DNN
+%
+%- It is hard to define interpretability since it is audience or applicaiton dependent
+%- Properties which are helpful to define good explanation
+%- It is hard to evaluate explanation methods and their explanations
+%- Work has been done in proposing evaluation framework
+%- Filtering the scope of work and explaining the baselines for next chapter 
+
 \subsection{Interpretable models vs Black Box Models} %\subsection{}
 %\textit{Sub-section Scope.}
 %\begin{itemize}
 %	\item \textit{Write on interpretable models}
 %	\item \textit{Write about what are black box models}
 %\end{itemize}
+
+Defining Interpretability \citet{du2018techniques} \citet{mittelstadt2019explaining} \citet{guidotti2018survey} \citet{honegger2018shedding}
+
+
+
+
+\textbf{Citations}
+\par
+\citet{honegger2018shedding} shedding light - master thesis
+\par
+\citet{beillevaire2018inside} inside black-box- master thesis KTH
+\newline \par
+
+
+\citet{doshi2017accountability} Accountability of AI under the law: The role of explanation - journal
+\par
+\citet{goodman2017european} European Union regulations on algorithmic decision-making. - journal
+\citet{bibal2016interpretability} Interpretability of Machine Learning Models - journal
+\newline \par
+
+\citet{guidotti2018survey} A survey of methods for explaining black box models - survey 2018
+\par
+\citet{du2018techniques} Techniques for interpretable machine learning - survey 2019
+\par
+\citet{murdoch2019interpretable} Interpretable machine learning: definitions, methods, and applications - survey 2019
+\par
+\citet{zhang2019machine} Machine Learning Testing: Survey - survey 2019
+\par
+\citet{mittelstadt2019explaining} Explaining explanations in AI - survey 2019
+\newline \par 
+
+
+\citet{cathy2017weapons} Weapons of Math Destruction - book
+\par
+\citet{molnarinterpretable} Interpretable machine learning - book
+\newline \par
+
+Why a right to explanation of automated decision-making does not exist in the general data protection regulation. \newline
+Counterfactual explanations without opening the black box \newline \newline
+
+
+The elements of statistical learning 2nd edition - Linear models \newline
+Improved use of continuous attributes in c4. 5 - decision tree
+
 
 \subsubsection{Linear models}
 %\textit{Sub-sub-section Scope.}
@@ -406,10 +498,6 @@ In such cases where a user needs to know the reason behind a specific decision. 
 %\end{itemize}
 
 \section{Methodologies}\label{sec:methodologies} %\section{Three}
-%\textit{Section Scope.}
-%\begin{itemize}
-%	\item \textit{Communicate about primary methodologies which are selected}
-%\end{itemize}
 This section explains the methodologies which are carried from research to measure explanations robustness. Explanations are generated using methods; Local Interpretable Model-Agnostic Explanations (LIME) and Shapley Additive Explanations (SHAP) \citep{ribeiro2016should,lundberg2017unified}. To measure the robustness of explanations, local Lipschitz Continuity technique \citep{alvarez2018robustness} is implemented and tested out on UCI classification datasets.
 
 On a high-level, the steps work as follow. 1) Predictive models are trained to perform classification tasks; these models behave as black-box models in the process. 2) Explanation methods interpret black-box models to find the reasons behind the predictions. 3) Explanations robustness is measured using local Lipschitz estimation technique \citep{alvarez2018robustness}.
@@ -817,9 +905,9 @@ Table~\ref{table:datasets_UCI} shows the attributes for each dataset. Iris conta
 
 
 \subsubsection{Training and Evaluating Models}
-Random forest and Logistic Regression classifiers are used to train predictive models. In the case of Random Forest, \textit{"balanced\_subsample"} mode is set for setting the \textit{class\_weights}. The \textit{"balanced\_subsample"} mode computes weights based on the bootstrap sample for every tree grown. For \textit{"n\_estimators"}, multiple values \textit{(100, 200 500, 1000)} are tried to get the best performing model.
+Random forest and logistic regression classifiers are used to train predictive models. In the case of random forest, \textit{"balanced\_subsample"} mode is set for setting the \textit{class\_weights}. The \textit{"balanced\_subsample"} mode computes weights based on the bootstrap sample for every tree grown. For \textit{"n\_estimators"}, multiple values \textit{(100, 200 500, 1000)} are tried to get the best performing model.
 
-In the case of Logistic Regression, \textit{"max\_iter"} (maximum iteration) is set to 100 and \textit{solver="liblinear"}. The \textit{'liblinear'} as a optimisation algorithm is a good choice in our case because of the small sizes of datasets. The \textit{"penalty"} scheme is set to $l_2$ norm and \textit{class\_weights="balanced"}. The \textit{"balanced"} mode uses the values of class to adjust the weights automatically. The weights are inversely proportional to the class frequencies in the input data as  \textit{n\_samples/(n\_classes * np.bincount(y))}. To manage multiple class case, an \textit{"ovr"} mode is used which makes a binary problem for each label and fit a model. 
+In the case of logistic regression, \textit{"max\_iter"} (maximum iteration) is set to 100 and \textit{solver="liblinear"}. The \textit{'liblinear'} as a optimisation algorithm is a good choice in our case because of the small sizes of datasets. The \textit{"penalty"} scheme is set to $l_2$ norm and \textit{class\_weights="balanced"}. The \textit{"balanced"} mode uses the values of class to adjust the weights automatically. The weights are inversely proportional to the class frequencies in the input data as  \textit{n\_samples/(n\_classes * np.bincount(y))}. To manage multiple class case, an \textit{"ovr"} mode is used which makes a binary problem for each label and fit a model. 
 
 Table~\ref{table:training_models_datasets_UCI} shows fixed and grid search parameters used to train the models.
 
@@ -843,7 +931,7 @@ Table~\ref{table:training_models_datasets_UCI} shows fixed and grid search param
 	\end{center}
 \end{table}
 
-For each dataset, a Random Forest and a Logistic Regression classifiers are trained using the above settings for training the models. It appears that a Random Forest classifier train well on ionoshphere and glass datasets with the \textit{F1-score} of 0.86 and 1.00, respectively. On the other side, Logistic Regression classifier fit well on iris dataset. It gives the \textit{F1-score} of 0.96 as compared to \textit{F1-score} of 0.86 given by Random Forest. Table~\ref{table:training_models_F1_score_datasets_UCI} shows the \textit{F1-score} of each model.
+For each dataset, a random forest and a logistic regression classifiers are trained using the above settings for training the models. It appears that a random forest classifier train well on ionoshphere and glass datasets with the \textit{F1-score} of 0.86 and 1.00, respectively. On the other side, Logistic Regression classifier fit well on iris dataset. It gives the \textit{F1-score} of 0.96 as compared to \textit{F1-score} of 0.86 given by random forest. Table~\ref{table:training_models_F1_score_datasets_UCI} shows the \textit{F1-score} of each model.
 
 \begin{table}[H]
 	\caption{F1-scores of Classification Models}
@@ -873,11 +961,11 @@ For each dataset, a Random Forest and a Logistic Regression classifiers are trai
 %%% HL = headlamps
 
 Moreover, the classification reports are given below for each dataset and model. These reports show the precision and recall of each model.
-Table~\ref{table:rf_model_iris_report} and Table~\ref{table:lr_model_iris_report} show the classification reports of Random Forest and Logistic Regression trained on iris dataset, respectively. After having a train:test split, a total of 30 instances were selected in the test set. Table~\ref{table:rf_model_iris_report} shows that the Random Forest model classifies all the instances correctly which belong to class \textit{"setosa"}. However, it misclassifies one instance of \textit{"versicolor"} class and two instances from \textit{"virginica"} class. The precision values achieved by the Random Forest classifier are 1.0, 0.83 and 0.86, where recall values are 1.0, 0.71 and 0.92 for all the three classes: \textit{"setosa"}, \textit{"versicolor"}, and \textit{"viginica"}, respectively.  
+Table~\ref{table:rf_model_iris_report} and Table~\ref{table:lr_model_iris_report} show the classification reports of random forest and Logistic Regression trained on iris dataset, respectively. After having a train:test split, a total of 30 instances were selected in the test set. Table~\ref{table:rf_model_iris_report} shows that the random forest model classifies all the instances correctly which belong to class \textit{"setosa"}. However, it misclassifies one instance of \textit{"versicolor"} class and two instances from \textit{"virginica"} class. The precision values achieved by the random forest classifier are 1.0, 0.83 and 0.86, where recall values are 1.0, 0.71 and 0.92 for all the three classes: \textit{"setosa"}, \textit{"versicolor"}, and \textit{"viginica"}, respectively.  
 
 \begin{table}[H]
 	\centering
-	\caption{Iris: Classification Report of Random Forest}
+	\caption{Iris: Classification Report of random forest}
 	\label{table:rf_model_iris_report}
 	\begin{tabular}{@{}ccccccc@{}}
 		\toprule
@@ -892,7 +980,7 @@ Table~\ref{table:rf_model_iris_report} and Table~\ref{table:lr_model_iris_report
 	\end{tabular}
 \end{table}
 
-Table~\ref{table:lr_model_iris_report} shows that the Logistic Regression model which accurately classifies all the instances of class \textit{"setosa"} and \textit{"versicolor"}. However, it misclassifies one instance of \textit{"virginica}" class. The precision values achieved by the Logistic Regression classifier are 1.0, 0.10 and 0.93, where recall values are 1.0, 0.86 and 0.10 for all the three classes: \textit{"setosa"}, \textit{"versicolor"}, and \textit{"viginica"}, respectively.
+Table~\ref{table:lr_model_iris_report} shows that the logistic regression model which accurately classifies all the instances of class \textit{"setosa"} and \textit{"versicolor"}. However, it misclassifies one instance of \textit{"virginica}" class. The precision values achieved by the logistic regression classifier are 1.0, 0.10 and 0.93, where recall values are 1.0, 0.86 and 0.10 for all the three classes: \textit{"setosa"}, \textit{"versicolor"}, and \textit{"viginica"}, respectively.
 
 \begin{table}[H]
 	\centering
@@ -911,7 +999,7 @@ Table~\ref{table:lr_model_iris_report} shows that the Logistic Regression model 
 \end{table}
 
 
-Table~\ref{table:rf_model_iono_report} shows the report of the Random Forest model trained on ionoshpere dataset. It wrongly classifies the five instances of \textit{"Bad"} class and gives the values of 0.80 and 0.83 for precision and recall. For a class label \textit{"Good"}, it only misclassifies the four instances out of fourty-two which gives the precision and recall values of 0.91 and 0.89, respectively.
+Table~\ref{table:rf_model_iono_report} shows the report of the random forest model trained on ionoshpere dataset. It wrongly classifies the five instances of \textit{"Bad"} class and gives the values of 0.80 and 0.83 for precision and recall. For a class label \textit{"Good"}, it only misclassifies the four instances out of fourty-two which gives the precision and recall values of 0.91 and 0.89, respectively.
 
 \begin{table}[H]
 	\begin{center}
@@ -926,7 +1014,7 @@ Table~\ref{table:rf_model_iono_report} shows the report of the Random Forest mod
 	\end{center}
 \end{table}
 
-Table~\ref{table:lr_model_iono_report} shows the report of of Logistic Regression model trained on ionoshpere dataset. In constrast to the Random Forest model, it misclassifies more instances with respect to class label \textit{"Bad"}, droping the precision and recall values to 0.76 and 0.56. It also decreases the precision of class label \textit{"Good"} but it seems that a recall value increases from 0.89 to 0.91.
+Table~\ref{table:lr_model_iono_report} shows the report of of Logistic Regression model trained on ionoshpere dataset. In constrast to the random forest model, it misclassifies more instances with respect to class label \textit{"Bad"}, droping the precision and recall values to 0.76 and 0.56. It also decreases the precision of class label \textit{"Good"} but it seems that a recall value increases from 0.89 to 0.91.
 
 \begin{table}[H]
 	\begin{center}
@@ -941,7 +1029,7 @@ Table~\ref{table:lr_model_iono_report} shows the report of of Logistic Regressio
 	\end{center}
 \end{table}
 
-Table~\ref{table:rf_model_glass_report} and Table~\ref{table:lr_model_glass_report} show the classification reports of Random Forest and Logistic Regression classifiers trained on glass dataset. The class labels shown in the tables are the short forms of the original labels. Original labels are given below:
+Table~\ref{table:rf_model_glass_report} and Table~\ref{table:lr_model_glass_report} show the classification reports of Random forest and logistic regression classifiers trained on glass dataset. The class labels shown in the tables are the short forms of the original labels. Original labels are given below:
 \begin{itemize}
 	\item BWF = building\_windows\_float\_processed
 	\item BWNF = building\_windows\_non\_float\_processed
@@ -951,7 +1039,7 @@ Table~\ref{table:rf_model_glass_report} and Table~\ref{table:lr_model_glass_repo
 	\item HL = headlamps
 \end{itemize}
 
-Logistic Regression model misclassifies two instances of class label \textit{"BWNF"}, which decreases the precision and recall values from 1.00 to 0.91 and 0.86, respectively. Moreover, it also misclassifies one out of five instances of class label \textit{"VWF"} that drops the precision value to 0.67 and recall value to 0.8. On the other side, Random Forest model with the settings mentioned in Table~\ref{table:training_models_datasets_UCI} achieves 100\textit{\%} precision and recall for all the class labels. 
+Logistic Regression model misclassifies two instances of class label \textit{"BWNF"}, which decreases the precision and recall values from 1.00 to 0.91 and 0.86, respectively. Moreover, it also misclassifies one out of five instances of class label \textit{"VWF"} that drops the precision value to 0.67 and recall value to 0.8. On the other side, random forest model with the settings mentioned in Table~\ref{table:training_models_datasets_UCI} achieves 100\textit{\%} precision and recall for all the class labels. 
 
 \begin{table}[H]
 	\begin{center}
@@ -994,21 +1082,21 @@ Logistic Regression model misclassifies two instances of class label \textit{"BW
 	\end{center}
 \end{table}
 
-In conclusion, it appears that Logistic Regression fits well on iris dataset as compared to Random Forest model. On the other hand, Random Forest is a better fit on ionoshphere and glass datasets. Now, these six predicive models can be used as black-box models in further experiments.
+In conclusion, it appears that Logistic Regression fits well on iris dataset as compared to random forest model. On the other hand, random forest is a better fit on ionoshphere and glass datasets. Now, these six predicive models can be used as black-box models in further experiments.
 
 \subsubsection{Interpreting Models using LIME \& SHAP}
 Now, having predictive models as black-boxes at our disposal, the black-box interpretability models (LIME~\ref{sec:LIME} and SHAP~\ref{sec:SHAP}) can be used to interpret predictions and generate explanations. Selected iris dataset examples and predictions are used in the following demonstrations to present the concept of interpreting the black-box model.
 
-As explained in Section~\ref{sec:LIME}, LIME only provides the framework to explain an individual prediction, and by combining multiple explanations it gives the global perspective of a black-box model. The way LIME gives an explanation is illustrative in figure~\ref{fig:lime_rf_iris_instance_explanation}. It shows an example of interpreting Random Forest's prediction for an instance of iris dataset. The class probabilities are shown and in this case the class is correctly predicted to \textit{"setosa"} with $p(setosa)=1.0$. To explain the prediction, it describes the range of values which represent the positive or negative contribution of a feature in the prediction. As a result, LIME provides an explanation vector which contains the values for each feature.
+As explained in Section~\ref{sec:LIME}, LIME only provides the framework to explain an individual prediction, and by combining multiple explanations it gives the global perspective of a black-box model. The way LIME gives an explanation is illustrative in figure~\ref{fig:lime_rf_iris_instance_explanation}. It shows an example of interpreting random forest's prediction for an instance of iris dataset. The class probabilities are shown and in this case the class is correctly predicted to \textit{"setosa"} with $p(setosa)=1.0$. To explain the prediction, it describes the range of values which represent the positive or negative contribution of a feature in the prediction. As a result, LIME provides an explanation vector which contains the values for each feature.
 \begin{figure}[H]
 	\centering
 	\vspace*{5mm}
 	\includegraphics[width=1.0\linewidth]{lime_rf_iris_instance_explanation.png}
-	\caption{\textbf{LIME} explanation of a \textbf{Random Forest} model: The figure shows an example of explanation generated using LIME for a Random Forest prediction on a test instance of the \textbf{iris} dataset.}
+	\caption{\textbf{LIME} explanation of a \textbf{Random Forest} model: The figure shows an example of explanation generated using LIME for a random forest prediction on a test instance of the \textbf{iris} dataset.}
 	\label{fig:lime_rf_iris_instance_explanation}
 \end{figure}
 
-In contrast To Random Forest model, Logistic Regression model predicts the class label \textit{"setosa"} with the $p(setosa) = 0.85$ and gives $p(versicolor) = 0.15$ to class \textit{"versicolor"}. It is visible that both classifiers correctly predict class \textit{"setosa"}, but what made a Logistic Regression model to assign a probability of $p=0.15$ to class \textit{"versicolor"}? In the figure~\ref{fig:lime_lr_iris_instance_explanation}, it appears that the classifier does it mainly due to a \textit{"petal width"} feature. Though the prediction result is same but an interpretation is different which shows that the models treat feature values in different ways. Therefore, an explanation vector generated for a Logistic Regression prediction contains different values for each feature.
+In contrast To random forest model, logistic regression model predicts the class label \textit{"setosa"} with the $p(setosa) = 0.85$ and gives $p(versicolor) = 0.15$ to class \textit{"versicolor"}. It is visible that both classifiers correctly predict class \textit{"setosa"}, but what made a Logistic Regression model to assign a probability of $p=0.15$ to class \textit{"versicolor"}? In the figure~\ref{fig:lime_lr_iris_instance_explanation}, it appears that the classifier does it mainly due to a \textit{"petal width"} feature. Though the prediction result is same but an interpretation is different which shows that the models treat feature values in different ways. Therefore, an explanation vector generated for a Logistic Regression prediction contains different values for each feature.
 \begin{figure}[H]
 	\centering
 	\vspace*{5mm}
@@ -1031,7 +1119,7 @@ for both models and shows an explanation that which specific features influence 
 \end{figure}
 
 
-Similarly, SHAP~\ref{sec:SHAP} provides a framework to interpret the black-box models and gives the explanation vectors for each instance of interest. Figure~\ref{fig:shap_iris_summary_plots} shows the summary plots generated after calculating the shapley values on the iris dataset predictions. SHAP tells that the overall feature \textit{"petal width"} is the most important in Random Forest predictions (figure~\ref{fig:shap_rf_iris_summary_plots}). However, in Logistic Regression the \textit{"petal length"} feature impacts the most in making overall predictions (figure~\ref{fig:shap_lr_iris_summary_plots}). 
+Similarly, SHAP~\ref{sec:SHAP} provides a framework to interpret the black-box models and gives the explanation vectors for each instance of interest. Figure~\ref{fig:shap_iris_summary_plots} shows the summary plots generated after calculating the shapley values on the iris dataset predictions. SHAP tells that the overall feature \textit{"petal width"} is the most important in random forest predictions (figure~\ref{fig:shap_rf_iris_summary_plots}). However, in Logistic Regression the \textit{"petal length"} feature impacts the most in making overall predictions (figure~\ref{fig:shap_lr_iris_summary_plots}). 
 \begin{figure}[H]
 	\vspace*{0mm}
 	\centering
@@ -1047,11 +1135,11 @@ It is apparent from the above interpretations that the explanations generated by
 \subsubsection{Evaluating Explanations and Results}\label{sec:evaluating_explanations_and_results_part1}
 As now it is established how predictive models are built and how to generated explanation vectors using LIME \citep{ribeiro2016should} and SHAP \citep{lundberg2017unified}. It is feasible to apply robustness measures defined in Section~\ref{sec:lipschitz_estimation_as_a_stability_measure} \citep{alvarez2018robustness} and Section~\ref{sec:lipschitz_estimation_as_a_separability_measure}.
 
-Similar to the previous section, this section also uses iris dataset examples first to present the worst-deviation case (Section~\ref{sec:defining_explanation_evaluation_framework}) and then the dataset-level estimations for each model (Random Forest and Logistic Regression) and dataset (iris, ionosphere, glass).
+Similar to the previous section, this section also uses iris dataset examples first to present the worst-deviation case (Section~\ref{sec:defining_explanation_evaluation_framework}) and then the dataset-level estimations for each model (random forest and logistic regression) and dataset (iris, ionosphere, glass).
 The main ideas presented were the need to quantify the variation occurs in the explanations concerning the inputs. 1) Local Explanation Stabiliy: If inputs do not differ widely, then the corresponding explanations should not vary largely. 2) Local Explanation Separability: If explanations do not differ widely, then the corresponding inputs should not vary largely. The defined robustness measures gives a mechanism to quantify the variations and evaluate the explanation methods.
 
 \subsubsection*{Local Explanation Stability Measure}
-In figure~\ref{fig:iris_rf_deviation_stability}, an example of finding the worst-case deviation is presented. The illustration aims to show that which similar instances are having a wide difference in explanations.  Figure~\ref{fig:iris_rf_deviation_stability_shap} shows the deviation scenario of SHAP explanations when interpreting the Random Forest for a point of interest $x_i$. It shows the deviation of explanation which maximises the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation}. However, the value of Lipschitz estimate ($L=0.20$) is low in this specific case, but it still captures the change of positive to a negative contribution of the feature \textit{"sepal length"}.
+In figure~\ref{fig:iris_rf_deviation_stability}, an example of finding the worst-case deviation is presented. The illustration aims to show that which similar instances are having a wide difference in explanations.  Figure~\ref{fig:iris_rf_deviation_stability_shap} shows the deviation scenario of SHAP explanations when interpreting the random forest for a point of interest $x_i$. It shows the deviation of explanation which maximises the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation}. However, the value of Lipschitz estimate ($L=0.20$) is low in this specific case, but it still captures the change of positive to a negative contribution of the feature \textit{"sepal length"}.
 
 %https://tex.stackexchange.com/questions/42968/
 %reduction-of-space-between-two-sub-figures
@@ -1068,7 +1156,7 @@ In figure~\ref{fig:iris_rf_deviation_stability}, an example of finding the worst
 	\label{fig:iris_rf_deviation_stability}%
 \end{figure}
 
-On the other side, figure~\ref{fig:iris_rf_deviation_stability_lime} shows the deviation scenario of LIME explanations when interpreting the Random Forest for a point of interest $x_i$. In contrast, LIME explanations show a wide deviation. It maximises the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation} and gives the value of $L=2.80$. It seems that even a slight difference in feature values of \textit{"petal length"} and \textit{"petal width"} impacts largely on LIME explanations.
+On the other side, figure~\ref{fig:iris_rf_deviation_stability_lime} shows the deviation scenario of LIME explanations when interpreting the random forest for a point of interest $x_i$. In contrast, LIME explanations show a wide deviation. It maximises the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation} and gives the value of $L=2.80$. It seems that even a slight difference in feature values of \textit{"petal length"} and \textit{"petal width"} impacts largely on LIME explanations.
 
 %\begin{center}
 %	\begin{figure}[H]
@@ -1079,9 +1167,9 @@ On the other side, figure~\ref{fig:iris_rf_deviation_stability_lime} shows the d
 %	\end{figure}
 %\end{center}
 
-Similarly, the deviation scenarios in explanations generated for the Logistic Regression model are presented in figure~\ref{fig:iris_lr_deviation_stability}. The first noticeable thing is that even for the same point of interest $x_i$, LIME and SHAP provides different explanations when treating Logistic Regression as a black-box model (top row). In comparison to figure~\ref{fig:iris_rf_deviation_stability}, here SHAP and LIME treat \textit{"petal width"} feature as a negative contributor. LIME explanation also shows that \textit{"sepal length"} feature contributes negatively.
+Similarly, the deviation scenarios in explanations generated for the logistic regression model are presented in figure~\ref{fig:iris_lr_deviation_stability}. The first noticeable thing is that even for the same point of interest $x_i$, LIME and SHAP provides different explanations when treating logistic regression as a black-box model (top row). In comparison to figure~\ref{fig:iris_rf_deviation_stability}, here SHAP and LIME treat \textit{"petal width"} feature as a negative contributor. LIME explanation also shows that \textit{"sepal length"} feature contributes negatively.
 
-Figure~\ref{fig:iris_lr_deviation_stability} also illustrates both deviation cases of LIME and SHAP explanations for Logistic Regression model. In figure~\ref{fig:iris_lr_deviation_stability_shap}, an explanation generated using SHAP maximises the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation} and gives the value $L=0.157$. It shows that the deviated instance explanation (bottom left) has \textit{"sepal width"} feature as a negative contributor instead of positive. Now, figure~\ref{fig:iris_lr_deviation_stability_lime} shows the deviation case of LIME explanations. In contrast to SHAP (figure~\ref{fig:iris_lr_deviation_stability_lime}), LIME explanations deviate largely and maximise the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation} with the value of $L=2.03$. 
+Figure~\ref{fig:iris_lr_deviation_stability} also illustrates both deviation cases of LIME and SHAP explanations for logistic regression model. In figure~\ref{fig:iris_lr_deviation_stability_shap}, an explanation generated using SHAP maximises the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation} and gives the value $L=0.157$. It shows that the deviated instance explanation (bottom left) has \textit{"sepal width"} feature as a negative contributor instead of positive. Now, figure~\ref{fig:iris_lr_deviation_stability_lime} shows the deviation case of LIME explanations. In contrast to SHAP (figure~\ref{fig:iris_lr_deviation_stability_lime}), LIME explanations deviate largely and maximise the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation} with the value of $L=2.03$. 
 
 \begin{figure}[H]
 	%	\vspace*{0mm}
@@ -1103,9 +1191,9 @@ Figure~\ref{fig:iris_lr_deviation_stability} also illustrates both deviation cas
 %\end{center}
 
 
-Likewise, the local Lipschitz estimates as per \eqref{eq:lipschitz_estimation} are calculated for each test point of UCI datasets (iris, ionosphere, glass) used in experiments. Figure~\ref{fig:UCI_datasets_stability_estimates} illustrates the estimations performed for both predictive models on test points of datasets using LIME and SHAP. It seems that SHAP has low deviations values in explanations generated on test points of iris dataset as compared to LIME. However, the difference in the mean is more significant when the Random Forest (figure~\ref{fig:UCI_datasets_rf_stability_estimates}) model is used as a black-box instead of Logistic Regression (figure~\ref{fig:UCI_datasets_lr_stability_estimates}).
+Likewise, the local Lipschitz estimates as per \eqref{eq:lipschitz_estimation} are calculated for each test point of UCI datasets (iris, ionosphere, glass) used in experiments. Figure~\ref{fig:UCI_datasets_stability_estimates} illustrates the estimations performed for both predictive models on test points of datasets using LIME and SHAP. It seems that SHAP has low deviations values in explanations generated on test points of iris dataset as compared to LIME. However, the difference in the mean is more significant when the random forest (figure~\ref{fig:UCI_datasets_rf_stability_estimates}) model is used as a black-box instead of logistic regression (figure~\ref{fig:UCI_datasets_lr_stability_estimates}).
 
-Moreover, it appears that SHAP provides less deviated explanations also on test points of ionosphere dataset. In this case, explanations generated for Random Forest (figure~\ref{fig:UCI_datasets_rf_stability_estimates}) model also gives low values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation} as compared to Logistic Regression (figure~\ref{fig:UCI_datasets_lr_stability_estimates}). However, LIME seems to provide slightly more stable explanations on test points of glass datasets. In this case, it looks that the Logistic Regression (figure~\ref{fig:UCI_datasets_lr_stability_estimates}) model gives low values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation} as compared to Random Forest (figure~\ref{fig:UCI_datasets_rf_stability_estimates}), though the difference in the mean values of the estimations seems equal for both models.
+Moreover, it appears that SHAP provides less deviated explanations also on test points of ionosphere dataset. In this case, explanations generated for random forest (figure~\ref{fig:UCI_datasets_rf_stability_estimates}) model also gives low values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation} as compared to logistic regression (figure~\ref{fig:UCI_datasets_lr_stability_estimates}). However, LIME seems to provide slightly more stable explanations on test points of glass datasets. In this case, it looks that the logistic regression (figure~\ref{fig:UCI_datasets_lr_stability_estimates}) model gives low values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation} as compared to random forest (figure~\ref{fig:UCI_datasets_rf_stability_estimates}), though the difference in the mean values of the estimations seems equal for both models.
 
 \begin{figure}[H]
 	%	\vspace*{0mm}
@@ -1133,35 +1221,13 @@ Moreover, it appears that SHAP provides less deviated explanations also on test 
 %	\label{fig:iris_lr_robustness_lipschitz_estimates}
 %\end{figure} 
 
-The aggregated or mean values of local Lipschitz estimates in the above multiple scenarios also depict the evaluation for explanation methods (LIME and SHAP). Table~\ref{table:lipschitz_estimation_aggregated_datasets_UCI} contains these mean values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation} computed in figure~\ref{fig:UCI_datasets_stability_estimates}.
+%The aggregated or mean values of local Lipschitz estimates in the above multiple scenarios also depict the evaluation for explanation methods (LIME and SHAP). Table~\ref{table:lipschitz_estimation_aggregated_datasets_UCI} contains these mean values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation} computed in figure~\ref{fig:UCI_datasets_stability_estimates}.
 
-\begin{table}[H]
-	\caption{Mean values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation} computed in Figure~\ref{fig:UCI_datasets_stability_estimates}}
-	\label{table:lipschitz_estimation_aggregated_datasets_UCI}
-	\begin{center}
-		\begin{tabular}{|c|c|c|c|}
-			\hline
-			\textbf{Dataset} & \textbf{Model} & \textbf{LIME} & \textbf{SHAP} \\ \hline
-			
-			Iris & Random Forest & 0.94 & 0.22  \\ \hline
-			& Logistic Regression & 0.70 & 0.31 \\ \hline
-			
-			Ionosphere & Random Forest & 0.10 & 0.08 \\ \hline
-			& Logistic Regression & 0.33 & 0.12 \\ \hline
-			
-			Glass & Random Forest & 0.09 & 0.10 \\ \hline
-			& Logistic Regression & 0.03 & 0.04 \\ \hline
-			
-		\end{tabular}
-	\end{center}
-\end{table}
-
-It shows that a Random Forest model trained on iris and ionosphere datasets and explained by explanation method SHAP gives the lowest mean value of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation}. However, for glass dataset, a combination of the Logistic Regression model and LIME gives the lowest mean value of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation}. Here, the lowest values represents that the combinations which are likley to produce less variant explanations for similar instances.
 
 \subsubsection*{Local Explanation Separability Measure}
 Applying a local explanation separability measure reveals important results. Figure~\ref{fig:iris_rf_deviation_separability} shows an example of minimising the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation_as_a_separability_measure} for a point of interest $x_i$. It means that which similar explanations are having a wide difference in inputs.
 
-Figure~\ref{fig:iris_rf_deviation_separability} shows the results when the Random Forest model is interpreted using SHAP. A model classifies both inputs correctly and assigns probability values of above 99\% to correct class labels, \textit{p("versicolor")}=0.996 (top left) and \textit{p("setosa")}=1.0 (bottom left). It appears that a model easily differentiates the difference in feature values while making predictions. However, it seems that SHAP does not provide different explanations for different class labels. It gives an almost similar explanation for these two different predictions. 
+Figure~\ref{fig:iris_rf_deviation_separability} shows the results when the random forest model is interpreted using SHAP. A model classifies both inputs correctly and assigns probability values of above 99\% to correct class labels, \textit{p("versicolor")}=0.996 (top left) and \textit{p("setosa")}=1.0 (bottom left). It appears that a model easily differentiates the difference in feature values while making predictions. However, it seems that SHAP does not provide different explanations for different class labels. It gives an almost similar explanation for these two different predictions. 
 
 %https://tex.stackexchange.com/questions/42968/
 %reduction-of-space-between-two-sub-figures
@@ -1182,7 +1248,7 @@ Figure~\ref{fig:iris_rf_deviation_separability} shows the results when the Rando
 On the other side, figure~\ref{fig:iris_rf_deviation_separability_lime} shows the plot when LIME explanations are used to minimise the Lipschitz estimate for a point of interest $x_i$ as per \eqref{eq:lipschitz_estimation_as_a_separability_measure}. In contrast to SHAP explanations, LIME provides better separability results. The first reason is that for LIME explanations, a deviated example is also classified to the same class label \textit{"versicolor"} as a point of interest $x_i$. The other reason is that LIME seems to capture the difference in feature values, i.e. a \textit{"sepal length"} contributes negatively in deviated instance explanation and that drops the prediction probability value from \textit{p("versicolor")}=0.996 (top right) to \textit{p("versicolor")}=0.85 (bottom right).
 
 
-Similarly, figure~\ref{fig:iris_lr_deviation_separability} shows an example of applying separability measure \eqref{eq:lipschitz_estimation_as_a_separability_measure} on a setting where Logistic Regression model is used as a black-box model. Replacing a predictive model to Logistic Regression shows the drastic change in the worst-case deviation results. It seems that in this setting, both SHAP and LIME lacks a real separability in producing different explanations for inputs which are widely different in feature values.
+Similarly, figure~\ref{fig:iris_lr_deviation_separability} shows an example of applying separability measure \eqref{eq:lipschitz_estimation_as_a_separability_measure} on a setting where logistic regression model is used as a black-box model. Replacing a predictive model to logistic regression shows the drastic change in the worst-case deviation results. It seems that in this setting, both SHAP and LIME lacks a real separability in producing different explanations for inputs which are widely different in feature values.
 %https://tex.stackexchange.com/questions/42968/
 %reduction-of-space-between-two-sub-figures
 % https://latex.org/forum/viewtopic.php?t=28543
@@ -1200,9 +1266,9 @@ Similarly, figure~\ref{fig:iris_lr_deviation_separability} shows an example of a
 
 It is illustrative in figure~\ref{fig:iris_lr_deviation_separability_shap} that even being correctly predicted to two different class labels and having a significant shift in feature values, SHAP provides a similar explanation for both inputs. Figure~\ref{fig:iris_lr_deviation_separability_lime} gives slightly better value but produces similar results. It also gives similar explanations for inputs which differ widely in feature values and belong to separate class labels.
 
-Finally, figure~\ref{fig:UCI_datasets_separability_estimates} presents the calculated local Lipschitz estimates as a separability measure for each test point of UCI classification dataset (iris, ionosphere, glass) using LIME and SHAP. In figure~\ref{fig:UCI_datasets_rf_separability_estimates}, it appears that SHAP explanations for Random Forest model and iris have low estimated separability \eqref{eq:lipschitz_estimation_as_a_separability_measure} mean value as compared to LIME explanations. However, the case is opposite if a model is a Logistic Regression. It is illustrative in figure~\ref{fig:UCI_datasets_lr_separability_estimates} that SHAP explanations have high estimated separability \eqref{eq:lipschitz_estimation_as_a_separability_measure} mean value compared to LIME explanations.
+Finally, figure~\ref{fig:UCI_datasets_separability_estimates} presents the calculated local Lipschitz estimates as a separability measure for each test point of UCI classification dataset (iris, ionosphere, glass) using LIME and SHAP. In figure~\ref{fig:UCI_datasets_rf_separability_estimates}, it appears that SHAP explanations for random forest model and iris have low estimated separability \eqref{eq:lipschitz_estimation_as_a_separability_measure} mean value as compared to LIME explanations. However, the case is opposite if a model is a logistic regression. It is illustrative in figure~\ref{fig:UCI_datasets_lr_separability_estimates} that SHAP explanations have high estimated separability \eqref{eq:lipschitz_estimation_as_a_separability_measure} mean value compared to LIME explanations.
 
-In the case of ionosphere dataset, the SHAP explanations for both predictive models result in low estimated separability \eqref{eq:lipschitz_estimation_as_a_separability_measure} mean values as compare to LIME explanations. Though if we make here a small comparison between both models, then explanations generated for Logistic Regression model follow more separability than the explanations for the Random Forest model.
+In the case of ionosphere dataset, the SHAP explanations for both predictive models result in low estimated separability \eqref{eq:lipschitz_estimation_as_a_separability_measure} mean values as compare to LIME explanations. Though if we make here a small comparison between both models, then explanations generated for logistic regression model follow more separability than the explanations for the random forest model.
 
 \begin{figure}[H]
 	%	\vspace*{0mm}
@@ -1214,33 +1280,7 @@ In the case of ionosphere dataset, the SHAP explanations for both predictive mod
 	\label{fig:UCI_datasets_separability_estimates}%
 \end{figure}
 
-In the case for glass dataset, it looks that when a model is Random Forest, then the SHAP explanations seem to follow slightly more separability \eqref{eq:lipschitz_estimation_as_a_separability_measure}  as compared to LIME explanations (figure~\ref{fig:UCI_datasets_rf_separability_estimates}). However, the results are opposite when a black-box model is Logistic Regression. In figure~\ref{fig:UCI_datasets_lr_separability_estimates}, LIME explanations have high estimated separability \eqref{eq:lipschitz_estimation_as_a_separability_measure}  mean value compared to SHAP explanations.
-
-In the end, Table~\ref{table:lipschitz_estimation_separability_aggregated_datasets_UCI} presents the mean values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation_as_a_separability_measure} for all the cases shown in figure~\ref{fig:UCI_datasets_separability_estimates}. According to \eqref{eq:lipschitz_estimation_as_a_separability_measure}, the goal was to minimise the value in order to see which experimental settings produce more different explanations for different instances.
-
-\begin{table}[H]
-	\caption{Mean values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation_as_a_separability_measure} computed in figure~\ref{fig:UCI_datasets_separability_estimates}}
-	\label{table:lipschitz_estimation_separability_aggregated_datasets_UCI}
-	\begin{center}
-		\begin{tabular}{|c|c|c|c|}
-			\hline
-			\textbf{Dataset} & \textbf{Model} & \textbf{LIME} & \textbf{SHAP} \\ \hline
-			
-			Iris & Random Forest & 0.022 & 0.016  \\ \hline
-			& Logistic Regression & 0.039 & 0.067 \\ \hline
-			
-			Ionosphere & Random Forest & 0.025 & 0.017 \\ \hline
-			& Logistic Regression & 0.085 & 0.057 \\ \hline
-			
-			Glass & Random Forest & 0.0012 & 0.0013 \\ \hline
-			& Logistic Regression & 0.0013 & 0.0012 \\ \hline
-			
-		\end{tabular}
-	\end{center}
-\end{table}
-
-It appears that for iris dataset a combination of Logistic Regression interpreted by SHAP outputs explanations which represent more separability compared to other combinations. For ionosphere dataset, LIME explanations follow more separability when a predictive model is Logistic Regression. For glass dataset, a Random Forest model with SHAP explainer and a LIME explainer with a Logistic Regression model gives the same mean values and on average outputs the same explanations regarding separability measure.
-
+In the case for glass dataset, it looks that when a model is random forest, then the SHAP explanations seem to follow slightly more separability \eqref{eq:lipschitz_estimation_as_a_separability_measure}  as compared to LIME explanations (figure~\ref{fig:UCI_datasets_rf_separability_estimates}). However, the results are opposite when a black-box model is logistic regression. In figure~\ref{fig:UCI_datasets_lr_separability_estimates}, LIME explanations have high estimated separability \eqref{eq:lipschitz_estimation_as_a_separability_measure}  mean value compared to SHAP explanations.
 
 \subsection{Interpreting Convolutional Neural Network (CNN)}\label{sec:interpret_convolutional_neural_network}
 In the second part of the experiments, a Convolutional Neural Network (CNN) trained on MNIST handwritten digits dataset is used as a black-box model. Overall the experiments pipeline is the same as used in Section 4.1, but there is a slight difference. At the first step, 1) prepare the training and test set 2) train a Convolutional Neural Network (CNN) with the best possible accuracy. 3) predictions are explained using DeepExplain framework, which comprises various neural network interpretability models (\textit{Saliency, Grad*Input, e-LRP, Occlusion, Deeplift}). 4) calculate the local robustness of explanations using measures defined in Section~\ref{sec:defining_explanation_evaluation_framework} for test points. 
@@ -1335,7 +1375,7 @@ The worst-deviation case is visible in figure~\ref{fig:digit3_noise_deviations},
 	\subfloat[Occlusion]{{\includegraphics[width=3.5cm]{noise_digit_3_deviation_Occlusion.png} }}%
 	\qquad
 	\subfloat[Deeplift]{{\includegraphics[width=3.5cm]{noise_digit_3_deviation_Deeplift.png} }}%
-	\caption{Noise Dataset: Worst-case deviations for the maximizer of the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation}.}%
+	\caption{Noise Dataset: Worst-case deviations for the maximizing of the Lipschitz estimation as a stability measure as per \eqref{eq:lipschitz_estimation}.}%
 	\label{fig:digit3_noise_deviations}%
 \end{figure}
 
@@ -1354,7 +1394,7 @@ Similarly, figure~\ref{fig:digit3_deviations} shows the worst-case deviations, w
 	\subfloat[Occlusion]{{\includegraphics[width=3.5cm]{digit_3_deviation_Occlusion.png} }}%
 	\qquad
 	\subfloat[Deeplift]{{\includegraphics[width=3.5cm]{digit_3_deviation_Deeplift.png} }}%
-	\caption{Worst-case deviations for the maximizer of the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation}.}%
+	\caption{Worst-case deviations for the maximizing of the Lipschitz estimation as a stability measure $L(x_i)$ as per \eqref{eq:lipschitz_estimation}.}%
 	\label{fig:digit3_deviations}%
 \end{figure}
 
@@ -1376,28 +1416,9 @@ It appears the CNN model accurately differentiates and classifies the deviation 
 	\subfloat[Occlusion]{{\includegraphics[width=3.5cm]{digit_3_separability_deviation_Occlusion.png} }}%
 	\qquad
 	\subfloat[Deeplift]{{\includegraphics[width=3.5cm]{digit_3_separability_deviation_Deeplift.png} }}%
-	\caption{Worst-case deviations for the minimising of the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation_as_a_separability_measure}.}%
+	\caption{Worst-case deviations for the minimising of the Lipschitz estimation as a separability measure $L(x_i)$ as per \eqref{eq:lipschitz_estimation_as_a_separability_measure}.}%
 	\label{fig:digit3_deviations_separability}%
 \end{figure}
-
-In the end, the following figure~\ref{fig:mnist_robustness_lipschitz_estimates} and \ref{fig:mnist_robustness_lipschitz_estimates_separability} show dataset-level robustness by repeating the above calculation for 100 randomly selected instances. In the figure~\ref{fig:mnist_robustness_lipschitz_estimates}, it looks as expected that \textit{Saliency} method gives the highest average value for maximising the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation}, making it the most unstable method among others.  On the other side, \textit{Deeplift} method gives the lowest average value, whereas the other three methods (\textit{Grad*Input}, \textit{e-LRP}, \textit{Occlusion}) lie close to each other.
-
-On the other hand, figure~\ref{fig:mnist_robustness_lipschitz_estimates_separability} shows the values for minimising the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation_as_a_separability_measure}. In this case, \textit{Deeplift} method gives the minimum average value, which indicates that among all other methods, it lacks the most to having a separability in explanations. Similar to the previous case, \textit{Grad*Input}, \textit{e-LRP} and \textit{Occlusion} methods output values which are close to each other. \textit{Saliency} method shows the most separability in explanations by giving the highest average value.
-
-\begin{figure}[H]
-	\includegraphics[width=1.0\linewidth]{mnist_robustness_lipschitz_estimates.png}
-	\vspace*{-5mm}
-	\caption{Explanations for the maximizer of the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation}.}
-	\label{fig:mnist_robustness_lipschitz_estimates}
-\end{figure}
-
-
-\begin{figure}[H]
-	\includegraphics[width=1.0\linewidth]{mnist_robustness_lipschitz_estimates_separability.png}
-	\vspace*{-5mm}
-	\caption{Explanations for the minimising of the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation_as_a_separability_measure}.}
-	\label{fig:mnist_robustness_lipschitz_estimates_separability}
-\end{figure} 
 
 %%% mnist_robustness_lipschitz_estimates_old 
 %\begin{figure}[H]
@@ -1426,13 +1447,80 @@ On the other hand, figure~\ref{fig:mnist_robustness_lipschitz_estimates_separabi
 %\end{figure}
 
 
-
 \subsection{Results Summary}\label{sec:results_summary} %\subsection{}
+The achieved results help to the notion of applying the robustness measures on the explanation methods for several classification settings. The first experimental setting uses logistic regression and random forest as classifiers trained on iris, ionosphere and glass datasets. The explanations are generated using interpretability methods, LIME and SHAP. After applying the robustness measures to such setting, it appears that both of them lack overall stability and separability in generating explanations.
 
-%In contrast To Random Forest model, Logistic Regression model predicts the class label \textit{"setosa"} with the $p(setosa) = 0.85$ and gives $p(versicolor) = 0.15$ to class \textit{"versicolor"}. It is visible that both classifiers correctly predict class \textit{"setosa"}, but what made a Logistic Regression model to assign a probability of $p=0.15$ to class \textit{"versicolor"}? In the Figure~\ref{fig:lime_lr_iris_instance_explanation}, it appears that the classifier does it mainly due to a \textit{"petal width"} feature. Though the prediction result is same but an interpretation is different which shows that the models treat feature values in different ways. Therefore, an explanation vector generated for a Logistic Regression prediction contains different values for each feature.
-%
-%In contrast To Random Forest model, Logistic Regression model predicts the class label \textit{"setosa"} with the $p(setosa) = 0.85$ and gives $p(versicolor) = 0.15$ to class \textit{"versicolor"}. It is visible that both classifiers correctly predict class \textit{"setosa"}, but what made a Logistic Regression model to assign a probability of $p=0.15$ to class \textit{"versicolor"}? In the Figure~\ref{fig:lime_lr_iris_instance_explanation}, it appears that the classifier does it mainly due to a \textit{"petal width"} feature. Though the prediction result is same but an interpretation is different which shows that the models treat feature values in different ways. Therefore, an explanation vector generated for a Logistic Regression prediction contains different values for each feature.
+However, in some cases, it looks SHAP performs better than LIME and vice-versa. In our specified scenario, SHAP generally explains tree-based black-box such as random forest better as compared to LIME, whereas, LIME explain logistic regression predictions slightly better then SHAP. Though, it can not be generalised since results showed such preference only when applying stability measure on the explanations. As a summary, table~\ref{table:lipschitz_estimation_aggregated_datasets_UCI} contains the mean values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation} computed in figure~\ref{fig:UCI_datasets_stability_estimates}.
 
+\begin{table}[H]
+	\caption{Mean values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation} computed in Figure~\ref{fig:UCI_datasets_stability_estimates}}
+	\label{table:lipschitz_estimation_aggregated_datasets_UCI}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Dataset} & \textbf{Model} & \textbf{LIME} & \textbf{SHAP} \\ \hline
+			
+			Iris & Random Forest & 0.94 & 0.22  \\ \hline
+			& Logistic Regression & 0.70 & 0.31 \\ \hline
+			
+			Ionosphere & Random Forest & 0.10 & 0.08 \\ \hline
+			& Logistic Regression & 0.33 & 0.12 \\ \hline
+			
+			Glass & Random Forest & 0.09 & 0.10 \\ \hline
+			& Logistic Regression & 0.03 & 0.04 \\ \hline
+			
+		\end{tabular}
+	\end{center}
+\end{table}
+
+It shows that a random forest model trained on iris and ionosphere datasets and explained by explanation method SHAP gives the lowest mean value of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation}. It means that these combinations are likley to produce more stable explanations among comparison with other. However, for glass dataset, a combination of the logistic regression model and LIME gives the lowest mean value of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation}.
+
+
+In the case of applying separability measure on explanations, overall LIME slightly showed better results. Earlier in section, it is showed with a demonstration where iris dataset inputs are widely different, and SHAP gives an approximately exact explanation. In contrast, LIME outputs slightly different explanations for inputs having different feature values. Table~\ref{table:lipschitz_estimation_separability_aggregated_datasets_UCI} presents the mean values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation_as_a_separability_measure} for all the cases shown in figure~\ref{fig:UCI_datasets_separability_estimates}. According to \eqref{eq:lipschitz_estimation_as_a_separability_measure}, the goal was to minimise the value in order to see which experimental settings produce more different explanations for different instances.
+
+\begin{table}[H]
+	\caption{Mean values of local Lipschitz estimates as per \eqref{eq:lipschitz_estimation_as_a_separability_measure} computed in figure~\ref{fig:UCI_datasets_separability_estimates}}
+	\label{table:lipschitz_estimation_separability_aggregated_datasets_UCI}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Dataset} & \textbf{Model} & \textbf{LIME} & \textbf{SHAP} \\ \hline
+			
+			Iris & Random Forest & 0.022 & 0.016  \\ \hline
+			& Logistic Regression & 0.039 & 0.067 \\ \hline
+			
+			Ionosphere & Random Forest & 0.025 & 0.017 \\ \hline
+			& Logistic Regression & 0.085 & 0.057 \\ \hline
+			
+			Glass & Random Forest & 0.0012 & 0.0013 \\ \hline
+			& Logistic Regression & 0.0013 & 0.0012 \\ \hline
+			
+		\end{tabular}
+	\end{center}
+\end{table}
+
+It appears that for iris dataset a combination of logistic regression interpreted by SHAP outputs explanations which represent more separability compared to other combinations. For ionosphere dataset, LIME explanations follow more separability when a predictive model is logistic regression. For glass dataset, a random forest model with SHAP explainer and a LIME explainer with a rogistic regression model gives the same mean values and on average outputs the same explanations regarding separability measure.
+
+Finally, the second experimental setting which uses convolutional neural network trained on MNIST digits as classifier and DeepExplain framework to provide explanations. Several attribution methods from DeepExplain were compared (as presented in the above experiments) and the following figure~\ref{fig:mnist_robustness_lipschitz_estimates} and figure~\ref{fig:mnist_robustness_lipschitz_estimates_separability} demonsrtate dataset-level summary of robustness measures when applied to 100 randomly selected MNIST digits images.
+
+In the figure~\ref{fig:mnist_robustness_lipschitz_estimates}, it looks as expected that \textit{Saliency} method gives the highest average value for maximising the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation}, making it the most unstable method among others.  On the other side, \textit{Deeplift} method gives the lowest average value, whereas the other three methods (\textit{Grad*Input}, \textit{e-LRP}, \textit{Occlusion}) lie close to each other.
+
+On the other hand, figure~\ref{fig:mnist_robustness_lipschitz_estimates_separability} shows the values for minimising the Lipschitz estimate $L(x_i)$ as per \eqref{eq:lipschitz_estimation_as_a_separability_measure}. In this case, \textit{Deeplift} method gives the minimum average value, which indicates that among all other methods, it lacks the most to having a separability in explanations. Similar to the previous case, \textit{Grad*Input}, \textit{e-LRP} and \textit{Occlusion} methods output values which are close to each other. \textit{Saliency} method shows the most separability in explanations by giving the highest average value.
+
+\begin{figure}[H]
+	\includegraphics[width=1.0\linewidth]{mnist_robustness_lipschitz_estimates.png}
+	\vspace*{-5mm}
+	\caption{Local Lipschitz estimates $L(x_i)$ as a stability measure \eqref{eq:lipschitz_estimation} computed on randomly selected 100 MNIST digits explanations.}
+	\label{fig:mnist_robustness_lipschitz_estimates}
+\end{figure}
+
+
+\begin{figure}[H]
+	\includegraphics[width=1.0\linewidth]{mnist_robustness_lipschitz_estimates_separability.png}
+	\vspace*{-5mm}
+	\caption{Local Lipschitz estimates $L(x_i)$ as a separability measure \eqref{eq:lipschitz_estimation_as_a_separability_measure} computed on randomly selected 100 MNIST digits explanations.}
+	\label{fig:mnist_robustness_lipschitz_estimates_separability}
+\end{figure} 
 
 \section{Discussions and Conclusion}\label{sec:conclusion} %\Section{}
 \subsection{Limitations} %\subsection{}
